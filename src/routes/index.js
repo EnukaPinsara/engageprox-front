@@ -206,8 +206,9 @@ import AddUser from 'components/pages/users/create-user';
 import Events from 'components/pages/events';
 import CreateEvent from 'components/app/events/create-an-event/CreateEvent';
 import EventDetails from 'components/pages/events/view-details';
+import Audience from 'components/pages/audince/audience';
+import AudienceSettings from 'components/pages/audience-settings/audience-settings';
 // ************************************************************************
-
 
 const routes = [
   {
@@ -479,6 +480,14 @@ const routes = [
               {
                 path: paths.employees,
                 element: <Employees />
+              },
+              {
+                path: paths.audience,
+                element: <Audience />
+              },
+              {
+                path: paths.audienceSettings,
+                element: <AudienceSettings />
               },
               {
                 path: paths.employeeDetails,

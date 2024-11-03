@@ -10,7 +10,9 @@ const EventOtherInfo = ({ register }) => {
         <Form.Group className="mb-3">
           <Form.Label>Parking Availability</Form.Label>
           <Form.Select {...register('parkingAvailability')}>
-            <option value="" disabled>Select availability</option>
+            <option value="" disabled>
+              Select availability
+            </option>
             <option value="1">Yes</option>
             <option value="0">No</option>
           </Form.Select>

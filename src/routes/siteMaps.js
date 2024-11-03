@@ -102,7 +102,7 @@ export const appRoutes = {
     // },
     {
       name: 'Events Management',
-      icon: 'calendar-day',
+      icon: 'trophy',
       active: true,
       children: [
         {
@@ -123,8 +123,44 @@ export const appRoutes = {
       ]
     },
     {
+      name: 'Post Events Management',
+      icon: 'clock',
+      active: true,
+      children: [
+        {
+          name: 'item-to-be-set',
+          to: '404',
+          active: true
+        }
+      ]
+    },
+    {
+      name: 'Marketing',
+      icon: 'chart-line',
+      active: true,
+      children: [
+        {
+          name: 'item-to-be-set',
+          to: '404',
+          active: true
+        }
+      ]
+    },
+    {
+      name: 'Reports',
+      icon: 'chart-pie',
+      active: true,
+      children: [
+        {
+          name: 'item-to-be-set',
+          to: '404',
+          active: true
+        }
+      ]
+    },
+    {
       name: 'Settings',
-      icon: 'user',
+      icon: 'wrench',
       active: true,
       children: [
         {
@@ -144,16 +180,16 @@ export const appRoutes = {
         },
         {
           name: 'Audience management',
-          // to: paths.emailDetail,
+          to: paths.audience,
           active: true
         },
         {
           name: 'User Permission management',
           // to: paths.emailDetail,
           active: true
-        },
+        }
       ]
-    },
+    }
     //   {
     //     name: 'E Commerce',
     //     icon: 'shopping-cart',

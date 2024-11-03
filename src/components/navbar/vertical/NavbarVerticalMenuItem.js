@@ -205,38 +205,51 @@ const NavbarVerticalMenuItem = ({ route, isActive }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleDarkModeChange = (e) => setIsDarkMode(e.matches);
+    const darkModeMediaQuery = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    );
+    const handleDarkModeChange = e => setIsDarkMode(e.matches);
 
     // Set initial dark mode state
     setIsDarkMode(darkModeMediaQuery.matches);
 
     // Listen for changes
     darkModeMediaQuery.addEventListener('change', handleDarkModeChange);
-    return () => darkModeMediaQuery.removeEventListener('change', handleDarkModeChange);
+    return () =>
+      darkModeMediaQuery.removeEventListener('change', handleDarkModeChange);
   }, []);
 
   const itemStyle = {
-    padding: '8px 16px',
+    padding: '4px 16px',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
     transition: 'background-color 0.3s, border 0.3s',
     color: isDarkMode ? '#FFFFFF' : '#333333',
-    borderLeft: isHovered || isActive ? (isDarkMode ? '3px solid #8ab4f8' : '3px solid #007bff') : '3px solid transparent',
-    backgroundColor: isHovered || isActive ? (isDarkMode ? '#EFEEEA' : '#151E2C') : 'transparent',
+    borderLeft:
+      isHovered || isActive
+        ? isDarkMode
+          ? '3px solid #8ab4f8'
+          : '3px solid #007bff'
+        : '3px solid transparent',
+    backgroundColor:
+      isHovered || isActive
+        ? isDarkMode
+          ? '#EFEEEA'
+          : '#151E2C'
+        : 'transparent'
   };
 
   const iconStyle = {
     fontSize: '1.2em',
-    color: isDarkMode ? '#606D82' : '#007bff',
+    color: isDarkMode ? '#606D82' : '#007bff'
   };
 
   const textStyle = {
     fontSize: '1em',
     fontWeight: '500',
     paddingLeft: '8px',
-    color: isDarkMode ? '#606D82' : '#333333',
+    color: isDarkMode ? '#606D82' : '#333333'
   };
 
   return (
@@ -264,11 +277,11 @@ const routeShape = {
   active: PropTypes.bool,
   name: PropTypes.string.isRequired,
   to: PropTypes.string,
-  icon: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+  icon: PropTypes.oneOfType([PropTypes.array, PropTypes.string])
 };
 routeShape.children = PropTypes.arrayOf(PropTypes.shape(routeShape));
 NavbarVerticalMenuItem.propTypes = {
-  route: PropTypes.shape(routeShape).isRequired,
+  route: PropTypes.shape(routeShape).isRequired
 };
 
 export default React.memo(NavbarVerticalMenuItem);

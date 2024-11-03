@@ -91,10 +91,12 @@ export default {
   followers: `/${rootPaths.socialRoot}/followers`,
   addProduct: `/${rootPaths.settingsRoot}/${rootPaths.productRoot}/add-product`,
   products: productLayout =>
-    `/${rootPaths.settingsRoot}/${rootPaths.productRoot}${productLayout ? `/${productLayout}` : ''
+    `/${rootPaths.settingsRoot}/${rootPaths.productRoot}${
+      productLayout ? `/${productLayout}` : ''
     }`,
   productDetails: productId =>
-    `/${rootPaths.settingsRoot}/${rootPaths.productRoot}/product-details${productId ? `/${productId}` : ''
+    `/${rootPaths.settingsRoot}/${rootPaths.productRoot}/product-details${
+      productId ? `/${productId}` : ''
     }`,
   orderList: `/${rootPaths.settingsRoot}/orders/order-list`,
   orderDetails: `/${rootPaths.settingsRoot}/orders/order-details`,
@@ -107,10 +109,12 @@ export default {
   invoice: `/${rootPaths.settingsRoot}/invoice`,
   createCourse: `/${rootPaths.eLearningRoot}/course/create-a-course`,
   courseDetails: courseId =>
-    `/${rootPaths.eLearningRoot}/course/course-details${courseId ? `/${courseId}` : ''
+    `/${rootPaths.eLearningRoot}/course/course-details${
+      courseId ? `/${courseId}` : ''
     }`,
   courses: courseLayout =>
-    `/${rootPaths.eLearningRoot}/course${courseLayout ? `/${courseLayout}` : ''
+    `/${rootPaths.eLearningRoot}/course${
+      courseLayout ? `/${courseLayout}` : ''
     }`,
   studentOverview: `/${rootPaths.eLearningRoot}/student-overview`,
   trainerProfile: `/${rootPaths.eLearningRoot}/trainer-profile`,
@@ -239,13 +243,12 @@ export default {
   faq: `/${rootPaths.docRoot}/faq`,
   designFile: `/${rootPaths.docRoot}/design-file`,
 
-
-
   // ****************************************************************************************
   cardLogin: `/${rootPaths.authRoot}/${rootPaths.authCardRoot}/login`,
   cardOTPVerification: `/${rootPaths.authRoot}/${rootPaths.authCardRoot}/otp-verification`,
 
   employees: `/${rootPaths.settingsRoot}/employees`,
+  audience: `/${rootPaths.settingsRoot}/audience`,
   employeeDetails: `/${rootPaths.settingsRoot}/employee-details/:userId`,
   addEmployeeOptions: `/${rootPaths.settingsRoot}/employees/create`,
   addBulkEmployees: `/${rootPaths.settingsRoot}/employees/create/bulk-upload`,
@@ -257,6 +260,6 @@ export default {
   events: `/${rootPaths.eventsRoot}`,
   createEvent: `/${rootPaths.eventsRoot}/create-an-event`,
   viewEvent: `/${rootPaths.eventsRoot}/view-event/:eventId`, // Ensure it has the placeholder :eventId
-
+  audienceSettings: `/${rootPaths.settingsRoot}/audience/settings`
   // ****************************************************************************************
 };
