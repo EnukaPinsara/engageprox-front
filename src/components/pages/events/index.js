@@ -82,7 +82,6 @@ const Events = () => {
                             </Row>
                         </FormBody>
 
-
                         <FormBody title="Filters">
                             <Row>
                                 <Col md="12">

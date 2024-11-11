@@ -35,7 +35,7 @@ const Users = () => {
         setSelectedUser(null);
     };
 
-    const handleSave = async () => {
+    const handleUpdate = async () => {
         try {
             await axios.put(`${baseUrl}/user/UpdateUser/${selectedUser.userId}`, selectedUser);
             setToastShown(true);
@@ -127,7 +127,7 @@ const Users = () => {
     const renderModalBodyContent = () => (
         <Form>
             <Form.Group controlId="formUserId">
-                <Form.Label>User ID</Form.Label>
+                <Form.Label>Employee ID</Form.Label>
                 <Form.Control
                     disabled
                     type="text"
@@ -167,7 +167,7 @@ const Users = () => {
         {
             label: 'Save Changes',
             variant: 'falcon-primary',
-            onClick: handleSave,
+            onClick: handleUpdate,
         }
     ];
 

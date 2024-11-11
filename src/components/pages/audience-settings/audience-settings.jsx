@@ -47,8 +47,8 @@ const columns = [
       return (
         <CardDropdown>
           <div className="py-2">
-            <Dropdown.Item onClick={() => {}}>View contacts</Dropdown.Item>
-            <Dropdown.Item onClick={() => {}}>Add contacts</Dropdown.Item>
+            <Dropdown.Item onClick={() => { }}>View contacts</Dropdown.Item>
+            <Dropdown.Item onClick={() => { }}>Add contacts</Dropdown.Item>
           </div>
         </CardDropdown>
       );
@@ -76,15 +76,15 @@ const Audience = () => {
     <>
       <div className="mb-4">
         <TitleHeader
-          title="Audience"
-          buttons={[
-            {
-              isPrimary: true,
-              name: 'Manage Audience',
-              icon: 'wrench',
-              onClick: handleOnClickManageAudience
-            }
-          ]}
+          title="Manage Audience"
+        // buttons={[
+        //   {
+        //     isPrimary: true,
+        //     name: 'Manage Audience',
+        //     icon: 'wrench',
+        //     onClick: handleOnClickManageAudience
+        //   }
+        // ]}
         >
           <Form.Group className="mb-3">
             <Form.Label>Selected Audience</Form.Label>

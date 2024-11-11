@@ -72,7 +72,6 @@ const CreateEvent = () => {
 
       const link = `www.engageprox.com/events/internal/${eventId}`;
 
-      // const link = `${window.location.origin}/events/${eventId}`;
       setEventLink(link);
       setEventName(data.eventName);
       setShowModal(true);
@@ -113,7 +112,6 @@ const CreateEvent = () => {
             <EventHeader handleDiscard={handleDiscard} />
           </Col>
           <Col xs={12}>
-            {/* <EventBanner setValue={setValue} /> */}
           </Col>
           <Col lg={8}>
             <EventDetails register={register} setValue={setValue} />

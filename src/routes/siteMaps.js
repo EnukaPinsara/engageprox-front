@@ -184,7 +184,7 @@ export const appRoutes = {
           active: true
         },
         {
-          name: 'User Permission management',
+          name: 'User Role Permission management',
           // to: paths.emailDetail,
           active: true
         }

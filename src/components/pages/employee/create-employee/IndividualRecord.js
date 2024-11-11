@@ -69,7 +69,6 @@ const IndividualRecord = () => {
                 role: data.role,
                 profilePicture: profilePictureBase64
             };
-
             const response = await axios.post(`${baseUrl}/user/CreateUser`, payload);
             setToastShown(true);
         } catch (error) {
@@ -87,7 +86,6 @@ const IndividualRecord = () => {
 
             const base64 = await toBase64(file);
             setProfilePictureBase64(base64);
-            console.log("Encoded Profile Picture:", base64);
         }
     };
 
@@ -224,7 +222,7 @@ const IndividualRecord = () => {
                                             type="file"
                                             accept="image/*"
                                             isInvalid={!!errors.profilePicture}
-                                            {...register('profilePicture', { required: 'Profile Picture is required' })} // Add required validation if needed
+                                            {...register('profilePicture', { required: 'Profile Picture is required' })}
                                             style={{ display: 'none' }}
                                             id="profilePictureUpload"
                                             onChange={handleProfilePictureChange}

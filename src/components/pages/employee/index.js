@@ -47,7 +47,7 @@ const Employees = () => {
         setSelectedUser(null);
     };
 
-    const handleSave = async () => {
+    const handleUpdate = async () => {
         try {
             await axios.put(`${baseUrl}/user/UpdateUser/${selectedUser.userId}`, selectedUser);
             setToastShown(true);
@@ -79,6 +79,7 @@ const Employees = () => {
             try {
                 const response = await axios.get(`${baseUrl}/user`);
                 setUsers(response.data);
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -299,7 +300,7 @@ const Employees = () => {
         {
             label: 'Save Changes',
             variant: 'falcon-primary',
-            onClick: handleSave,
+            onClick: handleUpdate,
         }
     ];
 

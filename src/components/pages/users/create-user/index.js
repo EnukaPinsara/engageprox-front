@@ -6,7 +6,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FormHeader from 'components/shared/formSections/FormHeader';
 import FormBody from 'components/shared/formSections/FormBody';
-import UserRoles from 'components/shared/UserRoles'
+import UserRoles from 'components/shared/UserRoles';
 import paths from 'routes/paths';
 import { toast } from 'react-toastify';
 
@@ -81,7 +81,7 @@ const AddUser = () => {
             await axios.put(`${baseUrl}/user/UpdateUser/${data.userId}`, payload);
             setToastShown(true);
         } catch (error) {
-            toast.error('Error creating a user!', { theme: 'colored' });
+            toast.error(`No user with ${searchTerm}`, { theme: 'colored' });
             console.error('Error updating user role:', error);
         }
     };
