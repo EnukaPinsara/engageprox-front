@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Form } from 'react-bootstrap';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
 import useAdvanceTable from 'hooks/useAdvanceTable';
 import AdvanceTableProvider from 'providers/AdvanceTableProvider';
 import TitleHeader from 'components/app/title-header/title-header';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import paths from 'routes/paths';
 export const sampleData = [
   {
@@ -116,7 +116,17 @@ export const sampleColumns = [
 ];
 
 const Audience = () => {
+  const [selectedAudience, setSelectedAudience] = useState('');
+  const location = useLocation();
   const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const group = queryParams.get('group');
+
+  useEffect(() => {
+    if (group) {
+      setSelectedAudience(group);
+    }
+  }, []);
 
   const table = useAdvanceTable({
     data: sampleData,
@@ -129,6 +139,10 @@ const Audience = () => {
 
   const handleOnClickManageAudience = () => {
     navigate(paths.audienceSettings);
+  };
+
+  const handleSelectChange = value => {
+    setSelectedAudience(value);
   };
 
   return (
@@ -147,12 +161,13 @@ const Audience = () => {
         >
           <Form.Group className="mb-3">
             <Form.Label>Selected Audience</Form.Label>
-            <Form.Select>
-              <option value="" disabled>
-                Select audience
-              </option>
-              <option value="1">All Staff</option>
-              <option value="0">Marketing</option>
+            <Form.Select
+              value={selectedAudience}
+              onChange={({ target: { value } }) => handleSelectChange(value)}
+            >
+              <option disabled>Select audience</option>
+              <option value="All-Staff">All Staff</option>
+              <option value="Marketing">Marketing</option>
             </Form.Select>
           </Form.Group>
         </TitleHeader>

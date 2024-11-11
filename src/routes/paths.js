@@ -260,6 +260,7 @@ export default {
   events: `/${rootPaths.eventsRoot}`,
   createEvent: `/${rootPaths.eventsRoot}/create-an-event`,
   viewEvent: `/${rootPaths.eventsRoot}/view-event/:eventId`, // Ensure it has the placeholder :eventId
-  audienceSettings: `/${rootPaths.settingsRoot}/audience/settings`
+  audienceSettings: `/${rootPaths.settingsRoot}/audience/settings`,
+  audienceCreate: `/${rootPaths.settingsRoot}/audience/create-audience`
   // ****************************************************************************************
 };
