@@ -8,6 +8,7 @@ import useAdvanceTable from 'hooks/useAdvanceTable';
 import { useNavigate } from 'react-router-dom';
 import paths from 'routes/paths';
 import CardDropdown from 'components/common/CardDropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const sampleData = [
   { id: 1, title: 'Engineering Team', contacts: 1000, status: 'Active' },
@@ -33,31 +34,43 @@ const formattedData = sampleData.map(item => ({
       : item.contacts
 }));
 
-const columns = [
-  { accessorKey: 'title', header: 'User Group Name' },
-  { accessorKey: 'contacts', header: 'Contacts' },
-  {
-    accessorKey: 'status',
-    header: 'Status'
-  },
-  {
-    accessorKey: 'action',
-    header: 'Action',
-    cell: ({ row: { original } }) => {
-      return (
-        <CardDropdown>
-          <div className="py-2">
-            <Dropdown.Item onClick={() => { }}>View contacts</Dropdown.Item>
-            <Dropdown.Item onClick={() => { }}>Add contacts</Dropdown.Item>
-          </div>
-        </CardDropdown>
-      );
-    }
-  }
-];
-
 const Audience = () => {
   const navigate = useNavigate();
+
+  const columns = [
+    { accessorKey: 'title', header: 'User Group Name' },
+    { accessorKey: 'contacts', header: 'Contacts' },
+    {
+      accessorKey: 'status',
+      header: 'Status'
+    },
+    {
+      accessorKey: 'action',
+      header: 'Action',
+      cell: ({ row: { original } }) => {
+        return (
+          <CardDropdown>
+            <div className="py-2">
+              <Dropdown.Item
+                onClick={() => {
+                  navigate('/settings/audience?group=Marketing');
+                }}
+              >
+                View contacts
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  navigate('/settings/audience/create-audience');
+                }}
+              >
+                Add contacts
+              </Dropdown.Item>
+            </div>
+          </CardDropdown>
+        );
+      }
+    }
+  ];
 
   const table = useAdvanceTable({
     data: formattedData,
@@ -69,39 +82,44 @@ const Audience = () => {
   });
 
   const handleOnClickManageAudience = () => {
-    navigate(paths.audienceSettings);
+    navigate('/settings/audience/create-audience');
   };
 
   return (
     <>
       <div className="mb-4">
         <TitleHeader
-          title="Manage Audience"
-        // buttons={[
-        //   {
-        //     isPrimary: true,
-        //     name: 'Manage Audience',
-        //     icon: 'wrench',
-        //     onClick: handleOnClickManageAudience
-        //   }
-        // ]}
+          title="Audience"
+          buttons={[
+            {
+              isPrimary: true,
+              name: 'Create Audience',
+              icon: 'folder-plus',
+              onClick: handleOnClickManageAudience
+            }
+          ]}
         >
-          <Form.Group className="mb-3">
-            <Form.Label>Selected Audience</Form.Label>
-            <Form.Select>
-              <option value="" disabled>
-                Select audience
-              </option>
-              <option value="1">All Staff</option>
-              <option value="0">Marketing Team</option>
-            </Form.Select>
-          </Form.Group>
+          <div>Dynamic Selected Audience</div>
         </TitleHeader>
       </div>
       <AdvanceTableProvider {...table}>
         <Card className="mb-3">
-          <Card.Header>
+          <Card.Header className="d-flex justify-content-between">
             <h5>Employee Groups</h5>
+            <Form className="position-relative">
+              <Form.Control
+                type="search"
+                placeholder="Search..."
+                size="sm"
+                aria-label="Search"
+                className="rounded search-input ps-4"
+                onChange={({ target }) => { }}
+              />
+              <FontAwesomeIcon
+                icon="search"
+                className="fs-10 text-400 position-absolute text-400 start-0 top-50 translate-middle-y ms-2"
+              />
+            </Form>
           </Card.Header>
           <Card.Body className="p-0">
             <AdvanceTable

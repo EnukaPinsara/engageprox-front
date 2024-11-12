@@ -10,6 +10,7 @@ const AdvanceTable = ({
   bodyClassName,
   rowClassName,
   tableProps
+  // isNotSelectable
 }) => {
   const table = useAdvanceTableContext();
   const { getRowModel, getFlatHeaders } = table;
@@ -65,7 +66,8 @@ AdvanceTable.propTypes = {
   headerClassName: PropTypes.string,
   bodyClassName: PropTypes.string,
   rowClassName: PropTypes.string,
-  tableProps: PropTypes.object
+  tableProps: PropTypes.object,
+  isNotSelectable: PropTypes.bool
 };
 
 export default AdvanceTable;

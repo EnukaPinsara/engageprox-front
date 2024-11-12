@@ -208,6 +208,7 @@ import CreateEvent from 'components/app/events/create-an-event/CreateEvent';
 import EventDetails from 'components/pages/events/view-details';
 import Audience from 'components/pages/audince/audience';
 import AudienceSettings from 'components/pages/audience-settings/audience-settings';
+import CreateAudience from 'components/pages/create-audince/create-audience';
 // ************************************************************************
 
 const routes = [
@@ -488,6 +489,10 @@ const routes = [
               {
                 path: paths.audienceSettings,
                 element: <AudienceSettings />
+              },
+              {
+                path: paths.audienceCreate,
+                element: <CreateAudience />
               },
               {
                 path: paths.employeeDetails,

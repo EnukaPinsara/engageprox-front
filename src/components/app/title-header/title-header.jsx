@@ -35,14 +35,16 @@ const TitleHeader = ({ title, buttons, children }) => {
                 } else {
                   return (
                     <>
-                      {icon && <FontAwesomeIcon icon="wrench" />}
                       <Button
                         key={name}
                         size="md"
                         variant="falcon-default"
                         onClick={onClick}
                       >
-                        {name}
+                        {icon && <FontAwesomeIcon icon={icon} />}
+                        <span style={{ marginLeft: icon ? '8px' : '0' }}>
+                          {name}
+                        </span>
                       </Button>
                     </>
                   );
