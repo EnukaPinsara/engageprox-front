@@ -90,7 +90,7 @@ const Employees = () => {
 
     const columns = [
         {
-            accessorKey: 'userName',
+            accessorKey: 'fullName',
             header: 'Name',
             meta: {
                 headerProps: { className: 'pe-1 text-900' },
@@ -99,17 +99,17 @@ const Employees = () => {
                 }
             },
             cell: ({ row: { original } }) => {
-                const { userName, profilePicture } = original;
+                const { fullName, profilePicture } = original;
                 return (
                     <Link to={paths.employeeDetails.replace(':userId', original.userId)}>
                         <Flex alignItems="center">
                             {original.profilePicture ? (
                                 <Avatar src={`data:image/jpeg;base64,${original.profilePicture}`} size="xl" className="me-2" />
                             ) : (
-                                <Avatar size="xl" name={original.userName} className="me-2" />
+                                <Avatar size="xl" name={original.fullName} className="me-2" />
                             )}
                             <div className="flex-1">
-                                <h5 className="mb-0 fs-10">{original.userName}</h5>
+                                <h5 className="mb-0 fs-10">{original.fullName}</h5>
                             </div>
                         </Flex>
                     </Link>
@@ -202,8 +202,8 @@ const Employees = () => {
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                     type="text"
-                    value={selectedUser?.userName || ''}
-                    onChange={(e) => setSelectedUser({ ...selectedUser, userName: e.target.value })}
+                    value={selectedUser?.fullName || ''}
+                    onChange={(e) => setSelectedUser({ ...selectedUser, fullName: e.target.value })}
                     className='mb-3'
                 />
             </Form.Group>
