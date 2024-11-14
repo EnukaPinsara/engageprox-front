@@ -54,8 +54,8 @@ const IndividualRecord = () => {
     const handleFormSubmit = async (data) => {
         try {
             const payload = {
-                userId: data.userId,
-                userName: data.userName,
+                employeeId: data.employeeId,
+                fullName: data.fullName,
                 email: data.email,
                 phoneNumber: data.phoneNumber,
                 birthDate: data.birthDate,
@@ -65,7 +65,6 @@ const IndividualRecord = () => {
                 employeeType: data.employeeType,
                 immediateSupervisor: data.immediateSupervisor,
                 joinedDate: data.joinedDate,
-                passwordHash: data.passwordHash,
                 role: data.role,
                 profilePicture: profilePictureBase64
             };
@@ -124,11 +123,11 @@ const IndividualRecord = () => {
                                     <Form.Label>Employee ID:</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        isInvalid={!!errors.userId}
-                                        {...register('userId', { required: 'Employee ID is required' })}
+                                        isInvalid={!!errors.employeeId}
+                                        {...register('employeeId', { required: 'Employee ID is required' })}
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.userId?.message}
+                                        {errors.employeeId?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
@@ -137,11 +136,11 @@ const IndividualRecord = () => {
                                     <Form.Label>Employee Name:</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        isInvalid={!!errors.userName}
-                                        {...register('userName', { required: 'Employee Name is required' })}
+                                        isInvalid={!!errors.fullName}
+                                        {...register('fullName', { required: 'Employee Name is required' })}
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.userName?.message}
+                                        {errors.fullName?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>

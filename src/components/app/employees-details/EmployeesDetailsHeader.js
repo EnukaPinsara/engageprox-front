@@ -12,7 +12,7 @@ const CustomerDetailsHeader = ({ userData }) => {
         <Row className="g-2">
           <Col>
             <h5 className="mb-2">
-              {userData.userName} (
+              {userData.fullName} (
               <a href={`mailto:${userData.email}`}>{userData.email}</a>)
             </h5>
             <IconButton

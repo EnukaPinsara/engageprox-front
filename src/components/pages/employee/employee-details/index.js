@@ -7,20 +7,20 @@ import axios from 'axios';
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const EmployeeDetails = () => {
-  const { userId } = useParams();
+  const { employeeId } = useParams();
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/user/${userId}`);
+        const response = await axios.get(`${baseUrl}/user/${employeeId}`);
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data', error);
       }
     };
     fetchUserData();
-  }, [userId]);
+  }, [employeeId]);
 
   if (!userData) {
     return <div>Loading...</div>;
