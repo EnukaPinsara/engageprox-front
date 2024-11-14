@@ -69,7 +69,7 @@
 //               />
 //             </Form.Group>
 //           </Col>
-//           {/* <Col md="6">
+//            <Col md="6">
 //             <Form.Group controlId="startDate">
 //               <Form.Label>Start Date</Form.Label>
 //               <DatePicker
@@ -265,7 +265,7 @@
 //                 {...register('country')}
 //               />
 //             </Form.Group>
-//           </Col> */}
+//           </Col> 
 //         </Row>
 //       </Card.Body>
 //     </Card>
@@ -283,7 +283,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Col, Form, Row } from 'react-bootstrap';
 
-const EventDetails = ({ register }) => (
+const EventDetails = ({ register, onEventTypeChange, eventType }) => (
   <Card className="mb-3">
     <Card.Header as="h5">Event Details</Card.Header>
     <Card.Body className="bg-body-tertiary">
@@ -313,24 +313,26 @@ const EventDetails = ({ register }) => (
         <Col md="12">
           <Form.Group controlId="eventType">
             <Form.Label>Event Type</Form.Label>
-            <Form.Select {...register('eventType')}>
-              <option value="" disabled>Select event type...</option>
+            <Form.Select {...register('eventType')} onChange={onEventTypeChange}>
+              <option value="" disabled>Select event type</option>
               <option value="Physical">Physical</option>
               <option value="Virtual">Virtual</option>
             </Form.Select>
           </Form.Group>
         </Col>
-        <Col md="12">
-          <Form.Group controlId="eventLocation">
-            <Form.Label>Location</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Event Location"
-              name="eventLocation"
-              {...register('eventLocation')}
-            />
-          </Form.Group>
-        </Col>
+        {eventType === 'Physical' && (
+          <Col md="12">
+            <Form.Group controlId="eventLocation">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Event Location"
+                name="eventLocation"
+                {...register('eventLocation')}
+              />
+            </Form.Group>
+          </Col>
+        )}
       </Row>
     </Card.Body>
   </Card>
@@ -338,6 +340,8 @@ const EventDetails = ({ register }) => (
 
 EventDetails.propTypes = {
   register: PropTypes.func.isRequired,
+  onEventTypeChange: PropTypes.func.isRequired,
+  eventType: PropTypes.string.isRequired,
 };
 
 export default EventDetails;

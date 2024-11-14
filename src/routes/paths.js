@@ -91,30 +91,26 @@ export default {
   followers: `/${rootPaths.socialRoot}/followers`,
   addProduct: `/${rootPaths.settingsRoot}/${rootPaths.productRoot}/add-product`,
   products: productLayout =>
-    `/${rootPaths.settingsRoot}/${rootPaths.productRoot}${
-      productLayout ? `/${productLayout}` : ''
+    `/${rootPaths.settingsRoot}/${rootPaths.productRoot}${productLayout ? `/${productLayout}` : ''
     }`,
   productDetails: productId =>
-    `/${rootPaths.settingsRoot}/${rootPaths.productRoot}/product-details${
-      productId ? `/${productId}` : ''
+    `/${rootPaths.settingsRoot}/${rootPaths.productRoot}/product-details${productId ? `/${productId}` : ''
     }`,
   orderList: `/${rootPaths.settingsRoot}/orders/order-list`,
   orderDetails: `/${rootPaths.settingsRoot}/orders/order-details`,
   // employees: `/${rootPaths.settingsRoot}/employees`,
   // customerDetails: `/${rootPaths.settingsRoot}/customer-details`,
-  // employeeDetails: `/${rootPaths.settingsRoot}/employee-details/:userId`,
+  // employeeDetails: `/${rootPaths.settingsRoot}/employee-details/:employeeId`,
   shoppingCart: `/${rootPaths.settingsRoot}/shopping-cart`,
   checkout: `/${rootPaths.settingsRoot}/checkout`,
   billing: `/${rootPaths.settingsRoot}/billing`,
   invoice: `/${rootPaths.settingsRoot}/invoice`,
   createCourse: `/${rootPaths.eLearningRoot}/course/create-a-course`,
   courseDetails: courseId =>
-    `/${rootPaths.eLearningRoot}/course/course-details${
-      courseId ? `/${courseId}` : ''
+    `/${rootPaths.eLearningRoot}/course/course-details${courseId ? `/${courseId}` : ''
     }`,
   courses: courseLayout =>
-    `/${rootPaths.eLearningRoot}/course${
-      courseLayout ? `/${courseLayout}` : ''
+    `/${rootPaths.eLearningRoot}/course${courseLayout ? `/${courseLayout}` : ''
     }`,
   studentOverview: `/${rootPaths.eLearningRoot}/student-overview`,
   trainerProfile: `/${rootPaths.eLearningRoot}/trainer-profile`,
@@ -249,7 +245,7 @@ export default {
 
   employees: `/${rootPaths.settingsRoot}/employees`,
   audience: `/${rootPaths.settingsRoot}/audience`,
-  employeeDetails: `/${rootPaths.settingsRoot}/employee-details/:userId`,
+  employeeDetails: `/${rootPaths.settingsRoot}/employee-details/:employeeId`,
   addEmployeeOptions: `/${rootPaths.settingsRoot}/employees/create`,
   addBulkEmployees: `/${rootPaths.settingsRoot}/employees/create/bulk-upload`,
   addIndividualEmployee: `/${rootPaths.settingsRoot}/employees/create/individual-record`,

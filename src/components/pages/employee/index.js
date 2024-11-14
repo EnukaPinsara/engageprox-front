@@ -49,7 +49,7 @@ const Employees = () => {
 
     const handleUpdate = async () => {
         try {
-            await axios.put(`${baseUrl}/user/UpdateUser/${selectedUser.userId}`, selectedUser);
+            await axios.put(`${baseUrl}/user/UpdateUser/${selectedUser.employeeId}`, selectedUser);
             setToastShown(true);
             setShowEditModal(false);
             setTimeout(() => {
@@ -63,8 +63,8 @@ const Employees = () => {
 
     const confirmDelete = async () => {
         try {
-            await axios.delete(`${baseUrl}/user/${userToDelete.userId}`);
-            setUsers((prevUsers) => prevUsers.filter((user) => user.userId !== userToDelete.userId));
+            await axios.delete(`${baseUrl}/user/${userToDelete.employeeId}`);
+            setUsers((prevUsers) => prevUsers.filter((user) => user.employeeId !== userToDelete.employeeId));
             toast.success('Employee deleted successfully', { theme: 'colored' });
         } catch (error) {
             toast.error('Error deleting employee!', { theme: 'colored' });
@@ -101,7 +101,7 @@ const Employees = () => {
             cell: ({ row: { original } }) => {
                 const { fullName, profilePicture } = original;
                 return (
-                    <Link to={paths.employeeDetails.replace(':userId', original.userId)}>
+                    <Link to={paths.employeeDetails.replace(':employeeId', original.employeeId)}>
                         <Flex alignItems="center">
                             {original.profilePicture ? (
                                 <Avatar src={`data:image/jpeg;base64,${original.profilePicture}`} size="xl" className="me-2" />

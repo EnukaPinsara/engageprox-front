@@ -37,7 +37,7 @@ const EmployeeDetailsContent = ({ userData }) => {
         try {
             setError(null);
 
-            const response = await axios.put(`${baseUrl}/user/UpdateUser/${formData.userId}`, formData);
+            const response = await axios.put(`${baseUrl}/user/UpdateUser/${formData.employeeId}`, formData);
 
             if (response.status === 200 || response.status === 204) {
                 localStorage.setItem('updateSuccess', 'true');
@@ -87,12 +87,12 @@ const EmployeeDetailsContent = ({ userData }) => {
                                 {isEditing ? (
                                     <Form.Control
                                         type="text"
-                                        name="userName"
-                                        value={formData.userName}
+                                        name="fullName"
+                                        value={formData.fullName}
                                         onChange={handleChange}
                                     />
                                 ) : (
-                                    <p>{formData.userName}</p>
+                                    <p>{formData.fullName}</p>
                                 )}
                             </Col>
                         </Row>

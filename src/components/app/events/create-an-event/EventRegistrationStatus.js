@@ -76,7 +76,7 @@ const EventRegistrationStatus = ({ register, setValue }) => {
   return (
     <Card>
       <Card.Header as="h5">Registration Requirements</Card.Header>
-      <Card.Body className="bg-body-tertiary pb-5">
+      <Card.Body className="bg-body-tertiary">
         <h6>Registration Required?</h6>
         <Form.Check
           className="mb-3"

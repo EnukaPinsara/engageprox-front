@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { Col, Form, Row, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import EventHeader from './EventHeader';
-import EventBanner from './EventBanner';
 import EventDetails from './EventDetails';
 import EventUpload from './EventUpload';
 import EventSchedule from './EventSchedule';
@@ -23,6 +22,7 @@ const CreateEvent = () => {
   const [eventLink, setEventLink] = useState('');
   const [eventName, setEventName] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [eventType, setEventType] = useState('');
   const navigate = useNavigate();
 
   const { register, handleSubmit, setValue, control, reset } = useForm({
@@ -37,7 +37,9 @@ const CreateEvent = () => {
       endDate: '',
       endTime: '',
       audienceType: '',
+      audience: '',
       parkingAvailability: '',
+      familyParticipation: '',
       maxAttendees: '',
       onlineLink: '',
       registrationRequired: false,
@@ -58,7 +60,9 @@ const CreateEvent = () => {
       EndDate: data.endDate,
       EndTime: data.endTime,
       AudienceType: data.audienceType,
+      Audience: data.audience,
       ParkingAvailability: data.parkingAvailability === "1",
+      FamilyParticipation: data.familyParticipation,
       MaxAttendees: data.maxAttendees,
       OnlineLink: data.onlineLink,
       RegistrationRequired: data.registrationRequired,
@@ -91,6 +95,10 @@ const CreateEvent = () => {
     }
   }, [toastShown]);
 
+  const handleEventTypeChange = (e) => {
+    setEventType(e.target.value);
+  };
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText(eventLink);
     toast.success('Link copied to clipboard!', { theme: 'colored' });
@@ -111,10 +119,13 @@ const CreateEvent = () => {
           <Col xs={12}>
             <EventHeader handleDiscard={handleDiscard} />
           </Col>
-          <Col xs={12}>
-          </Col>
           <Col lg={8}>
-            <EventDetails register={register} setValue={setValue} />
+            <EventDetails
+              register={register}
+              setValue={setValue}
+              onEventTypeChange={handleEventTypeChange}
+              eventType={eventType}
+            />
             <EventUpload register={register} setValue={setValue} />
             <EventSchedule register={register} setValue={setValue} />
             <EventAudience register={register} control={control} setValue={setValue} />
@@ -122,7 +133,7 @@ const CreateEvent = () => {
           <Col lg={4}>
             <div className="sticky-sidebar">
               <div className='mb-3'>
-                <EventOtherInfo register={register} control={control} />
+                <EventOtherInfo register={register} control={control} eventType={eventType} />
               </div>
               <div>
                 <EventRegistrationStatus register={register} setValue={setValue} />
@@ -141,28 +152,10 @@ const CreateEvent = () => {
         bodyContent={
           <div style={{ textAlign: 'center' }}>
             <p>Your event link for <strong>{eventName}</strong> has been generated successfully:</p>
-            <div
-              style={{
-                backgroundColor: '#f8f9fa',
-                padding: '10px',
-                borderRadius: '8px',
-                display: 'inline-block',
-                wordWrap: 'break-word',
-                margin: '10px 0'
-              }}
-            >
+            <div style={{ backgroundColor: '#f8f9fa', padding: '10px', borderRadius: '8px', display: 'inline-block', wordWrap: 'break-word', margin: '10px 0' }}>
               <strong>{eventLink}</strong>
             </div>
-            <Button
-              variant="outline-primary"
-              onClick={handleCopyLink}
-              style={{
-                marginTop: '15px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-            >
+            <Button variant="outline-primary" onClick={handleCopyLink} style={{ marginTop: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <i className="fas fa-copy"></i> Copy Link
             </Button>
           </div>
