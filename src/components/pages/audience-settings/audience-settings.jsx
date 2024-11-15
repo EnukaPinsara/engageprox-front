@@ -113,7 +113,7 @@ const Audience = () => {
                 size="sm"
                 aria-label="Search"
                 className="rounded search-input ps-4"
-                onChange={({ target }) => { }}
+                onChange={({ target }) => {}}
               />
               <FontAwesomeIcon
                 icon="search"
