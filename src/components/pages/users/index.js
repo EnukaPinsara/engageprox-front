@@ -20,7 +20,7 @@ const Users = () => {
 
     useEffect(() => {
         if (toastShown) {
-            toast.success('User details updated successfully', { theme: 'colored' });
+            toast.success('User Role updated successfully', { theme: 'colored' });
             setToastShown(false);
         }
     }, [toastShown]);
@@ -139,6 +139,7 @@ const Users = () => {
             <Form.Group controlId="formUserName">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
+                    disabled
                     type="text"
                     value={selectedUser?.fullName || ''}
                     onChange={(e) => setSelectedUser({ ...selectedUser, fullName: e.target.value })}

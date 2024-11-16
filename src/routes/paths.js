@@ -3,9 +3,7 @@ export const rootPaths = {
   dashboardRoot: 'dashboard',
   appsRoot: 'app',
   emailRoot: 'email',
-  eventsRoot: 'events',
   socialRoot: 'social',
-  // settingsRoot: 'e-commerce',
   productRoot: 'product',
   eLearningRoot: 'e-learning',
   supportDeskRoot: 'support-desk',
@@ -13,9 +11,11 @@ export const rootPaths = {
   pagesRoot: 'pages',
 
   // *************************
-  settingsRoot: 'settings',
   authRoot: 'authentication',
   authCardRoot: 'card',
+  eventsRoot: 'events',
+  miscellaneousRoot: 'miscellaneous',
+  settingsRoot: 'settings',
   // ****************************
 
   authSimpleRoot: 'simple',
@@ -255,8 +255,18 @@ export default {
 
   events: `/${rootPaths.eventsRoot}`,
   createEvent: `/${rootPaths.eventsRoot}/create-an-event`,
-  viewEvent: `/${rootPaths.eventsRoot}/view-event/:eventId`, // Ensure it has the placeholder :eventId
+  viewEvent: `/${rootPaths.eventsRoot}/view-event/:eventId`,
   audienceSettings: `/${rootPaths.settingsRoot}/audience/settings`,
-  audienceCreate: `/${rootPaths.settingsRoot}/audience/create-audience`
+  audienceCreate: `/${rootPaths.settingsRoot}/audience/create-audience`,
+
+  designations: `/${rootPaths.miscellaneousRoot}/designations`,
+  addDesignation: `/${rootPaths.miscellaneousRoot}/designations/create`,
+  departments: `/${rootPaths.miscellaneousRoot}/departments`,
+  addDepartment: `/${rootPaths.miscellaneousRoot}/departments/create`,
+  businessUnits: `/${rootPaths.miscellaneousRoot}/business-units`,
+  addBusinessUnit: `/${rootPaths.miscellaneousRoot}/business-units/create`,
+  employeeTypes: `/${rootPaths.miscellaneousRoot}/employee-types`,
+  addEmployeeType: `/${rootPaths.miscellaneousRoot}/employee-types/create`
+
   // ****************************************************************************************
 };
