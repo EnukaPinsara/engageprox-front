@@ -200,15 +200,24 @@ import Employees from 'components/pages/employee';
 import EmployeeDetails from 'components/pages/employee/employee-details';
 import IndividualRecord from 'components/pages/employee/create-employee/IndividualRecord';
 
-import Users from 'components/pages/users';
-import AddUser from 'components/pages/users/create-user';
-
 import Events from 'components/pages/events';
 import CreateEvent from 'components/app/events/create-an-event/CreateEvent';
 import EventDetails from 'components/pages/events/view-details';
 import Audience from 'components/pages/audince/audience';
 import AudienceSettings from 'components/pages/audience-settings/audience-settings';
 import CreateAudience from 'components/pages/create-audince/create-audience';
+
+import Users from 'components/pages/users';
+import AddUser from 'components/pages/users/create-user';
+
+import Designations from 'components/pages/miscellaneous/designations';
+import CreateDesignation from 'components/pages/miscellaneous/designations/create-designation';
+import Departments from 'components/pages/miscellaneous/departments';
+import CreateDepartment from 'components/pages/miscellaneous/departments/create-department';
+import BusinessUnits from 'components/pages/miscellaneous/business-units';
+import CreateBusinessUnit from 'components/pages/miscellaneous/business-units/create-business-unit';
+import EmployeeTypes from 'components/pages/miscellaneous/employee-types';
+import CreateEmployeeType from 'components/pages/miscellaneous/employee-types/create-employee-type';
 // ************************************************************************
 
 const routes = [
@@ -464,6 +473,43 @@ const routes = [
               {
                 path: paths.followers,
                 element: <Followers />
+              }
+            ]
+          },
+          {
+            path: rootPaths.miscellaneousRoot,
+            children: [
+              {
+                path: paths.designations,
+                element: <Designations />
+              },
+              {
+                path: paths.addDesignation,
+                element: <CreateDesignation />
+              },
+              {
+                path: paths.departments,
+                element: <Departments />
+              },
+              {
+                path: paths.addDepartment,
+                element: <CreateDepartment />
+              },
+              {
+                path: paths.businessUnits,
+                element: <BusinessUnits />
+              },
+              {
+                path: paths.addBusinessUnit,
+                element: <CreateBusinessUnit />
+              },
+              {
+                path: paths.employeeTypes,
+                element: <EmployeeTypes />
+              },
+              {
+                path: paths.addEmployeeType,
+                element: <CreateEmployeeType />
               }
             ]
           },

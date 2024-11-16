@@ -198,6 +198,16 @@ const Employees = () => {
 
     const renderModalBodyContent = () => (
         <Form>
+            <Form.Group controlId="formUserId">
+                <Form.Label>Employee ID</Form.Label>
+                <Form.Control
+                    disabled
+                    type="text"
+                    value={selectedUser?.employeeId || ''}
+                    onChange={(e) => setSelectedUser({ ...selectedUser, employeeId: e.target.value })}
+                    className='mb-3'
+                />
+            </Form.Group>
             <Form.Group controlId="formUserName">
                 <Form.Label>Name</Form.Label>
                 <Form.Control

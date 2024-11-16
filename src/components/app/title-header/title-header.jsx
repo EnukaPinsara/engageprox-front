@@ -52,7 +52,8 @@ const TitleHeader = ({ title, buttons, children }) => {
               })}
           </Col>
         </Row>
-        <Row className="pt-2">{children}</Row>
+        {/* <Row className="pt-2">{children}</Row> */}
+        {children && <Row className="pt-2">{children}</Row>}
       </Card.Body>
     </Card>
   );
