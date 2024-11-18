@@ -6,6 +6,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import TitleHeader from 'components/app/title-header/title-header';
 import paths from 'routes/paths';
+// import useCounterStore from 'components/shared/storage/storage';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -13,6 +14,8 @@ const CreateAudience = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [toastShown, setToastShown] = useState(false);
+
+  // const { count, increaseCount, decreaseCount, resetCount } = useCounterStore();
 
   useEffect(() => {
     if (toastShown) {
@@ -24,7 +27,7 @@ const CreateAudience = () => {
 
   const handleSaveAudience = async (data) => {
     try {
-      await axios.post(`${baseUrl}/audiance`, {
+      await axios.post(`${baseUrl}/audience`, {
         Audienc_e: data.audienceName,
         Descrption: data.audienceDescription,
       });
@@ -41,6 +44,7 @@ const CreateAudience = () => {
 
   return (
     <>
+      {/* <div><button onClick={() => increaseCount()}>Submit</button><button onClick={() => resetCount()}>Submit</button>{count}</div> */}
       <form onSubmit={handleSubmit(handleSaveAudience)}>
         <Row>
           <Col xs={12}>
