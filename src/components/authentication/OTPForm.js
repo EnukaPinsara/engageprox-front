@@ -8,8 +8,8 @@ import paths from 'routes/paths';
 
 const OTPForm = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
-  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes (120 seconds)
-  const [canResend, setCanResend] = useState(false); // State to track if OTP can be resent
+  const [timeLeft, setTimeLeft] = useState(120);
+  const [canResend, setCanResend] = useState(false);
   const inputs = useRef([]);
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -18,7 +18,6 @@ const OTPForm = () => {
 
   const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
-  // Handle OTP input change
   const handleOtpChange = (e, index) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
@@ -29,6 +28,19 @@ const OTPForm = () => {
       if (value && index < 5) {
         inputs.current[index + 1].focus();
       }
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Backspace') {
+      if (otp[index] === '' && index > 0) {
+        const newOtp = [...otp];
+        newOtp[index - 1] = '';
+        setOtp(newOtp);
+        inputs.current[index - 1].focus();
+      }
+    } else if (e.key === 'Enter') {
+      handleSubmit(e);
     }
   };
 
@@ -44,6 +56,8 @@ const OTPForm = () => {
 
         if (response.data.message) {
           toast.success('OTP verified successfully!', { theme: 'colored' });
+          setOtp(['', '', '', '', '', '']);
+          inputs.current[0].focus();
           navigate('/');
         } else {
           toast.error('Unexpected response from server.', { theme: 'colored' });
@@ -52,6 +66,8 @@ const OTPForm = () => {
         const errorMessage =
           error.response?.data?.message || 'Invalid OTP. Please try again.';
         toast.error(errorMessage, { theme: 'colored' });
+        setOtp(['', '', '', '', '', '']);
+        inputs.current[0].focus();
       }
     } else {
       toast.error('Please enter a valid 6-digit OTP', { theme: 'colored' });
@@ -69,7 +85,6 @@ const OTPForm = () => {
     }
   }, [timeLeft]);
 
-  // Handle Resend OTP
   const handleResendOtp = async () => {
     try {
       const response = await axios.post(`${baseUrl}/otp/send`, { identifier });
@@ -77,6 +92,8 @@ const OTPForm = () => {
         toast.success('OTP sent successfully!', { theme: 'colored' });
         setTimeLeft(120);
         setCanResend(false);
+        setOtp(['', '', '', '', '', '']);
+        inputs.current[0].focus();
       }
     } catch (error) {
       const errorMessage =
@@ -103,12 +120,12 @@ const OTPForm = () => {
             }}
             value={digit}
             onChange={(e) => handleOtpChange(e, idx)}
+            onKeyDown={(e) => handleKeyDown(e, idx)}
             ref={(el) => (inputs.current[idx] = el)}
           />
         ))}
       </div>
 
-      {/* Countdown Timer Display */}
       <div className="mb-3">
         {timeLeft > 0 ? (
           <p>Time remaining: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}</p>
@@ -117,7 +134,6 @@ const OTPForm = () => {
         )}
       </div>
 
-      {/* Resend OTP Button */}
       {canResend && (
         <Button onClick={handleResendOtp} className="mb-3">
           Resend OTP

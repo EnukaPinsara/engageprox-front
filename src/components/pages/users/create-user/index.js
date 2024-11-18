@@ -6,7 +6,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FormHeader from 'components/shared/formSections/FormHeader';
 import FormBody from 'components/shared/formSections/FormBody';
-import UserRoles from 'components/shared/UserRoles'
+import UserRoles from 'components/shared/UserRoles';
 import paths from 'routes/paths';
 import { toast } from 'react-toastify';
 
@@ -32,11 +32,10 @@ const AddUser = () => {
             const response = await axios.get(`${baseUrl}/User/${endpoint}`);
             const user = response.data;
 
-            setValue('userId', user.userId);
-            setValue('userName', user.userName);
+            setValue('employeeId', user.employeeId);
+            setValue('fullName', user.fullName);
             setValue('email', user.email);
             setValue('phoneNumber', user.phoneNumber);
-            setValue('passwordHash', user.passwordHash);
             setValue('designation', user.designation);
             setValue('birthDate', user.birthDate);
             setValue('department', user.department);
@@ -62,8 +61,8 @@ const AddUser = () => {
     const handleFormSubmit = async (data) => {
         try {
             const payload = {
-                userId: data.userId,
-                userName: data.userName,
+                employeeId: data.employeeId,
+                fullName: data.fullName,
                 email: data.email,
                 role: data.role,
                 phoneNumber: data.phoneNumber,
@@ -78,10 +77,10 @@ const AddUser = () => {
                 profilePicture: data.profilePicture,
             };
 
-            await axios.put(`${baseUrl}/user/UpdateUser/${data.userId}`, payload);
+            await axios.put(`${baseUrl}/user/UpdateUser/${data.employeeId}`, payload);
             setToastShown(true);
         } catch (error) {
-            toast.error('Error creating a user!', { theme: 'colored' });
+            toast.error(`No user with ${searchTerm}`, { theme: 'colored' });
             console.error('Error updating user role:', error);
         }
     };
@@ -117,7 +116,7 @@ const AddUser = () => {
                                         <Form.Control
                                             type="text"
                                             placeholder="Search by Employee ID or Email"
-                                            isInvalid={!!errors.userId}
+                                            isInvalid={!!errors.employeeId}
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
                                         />
@@ -125,7 +124,7 @@ const AddUser = () => {
                                             <FontAwesomeIcon icon="search" className="text-400" />
                                         </Button>
                                         <Form.Control.Feedback type="invalid">
-                                            {errors.userId?.message}
+                                            {errors.employeeId?.message}
                                         </Form.Control.Feedback>
                                     </InputGroup>
                                 </Form.Group>
@@ -155,7 +154,7 @@ const AddUser = () => {
                                             <Form.Label>Employee ID:</Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                {...register('userId')}
+                                                {...register('employeeId')}
                                                 disabled
                                             />
                                         </Form.Group>
@@ -163,7 +162,7 @@ const AddUser = () => {
                                             <Form.Label>Name:</Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                {...register('userName')}
+                                                {...register('fullName')}
                                                 disabled
                                             />
                                         </Form.Group>

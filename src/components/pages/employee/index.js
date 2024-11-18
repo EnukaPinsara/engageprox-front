@@ -47,9 +47,9 @@ const Employees = () => {
         setSelectedUser(null);
     };
 
-    const handleSave = async () => {
+    const handleUpdate = async () => {
         try {
-            await axios.put(`${baseUrl}/user/UpdateUser/${selectedUser.userId}`, selectedUser);
+            await axios.put(`${baseUrl}/user/UpdateUser/${selectedUser.employeeId}`, selectedUser);
             setToastShown(true);
             setShowEditModal(false);
             setTimeout(() => {
@@ -63,8 +63,8 @@ const Employees = () => {
 
     const confirmDelete = async () => {
         try {
-            await axios.delete(`${baseUrl}/user/${userToDelete.userId}`);
-            setUsers((prevUsers) => prevUsers.filter((user) => user.userId !== userToDelete.userId));
+            await axios.delete(`${baseUrl}/user/${userToDelete.employeeId}`);
+            setUsers((prevUsers) => prevUsers.filter((user) => user.employeeId !== userToDelete.employeeId));
             toast.success('Employee deleted successfully', { theme: 'colored' });
         } catch (error) {
             toast.error('Error deleting employee!', { theme: 'colored' });
@@ -79,6 +79,7 @@ const Employees = () => {
             try {
                 const response = await axios.get(`${baseUrl}/user`);
                 setUsers(response.data);
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -89,7 +90,7 @@ const Employees = () => {
 
     const columns = [
         {
-            accessorKey: 'userName',
+            accessorKey: 'fullName',
             header: 'Name',
             meta: {
                 headerProps: { className: 'pe-1 text-900' },
@@ -98,17 +99,17 @@ const Employees = () => {
                 }
             },
             cell: ({ row: { original } }) => {
-                const { userName, profilePicture } = original;
+                const { fullName, profilePicture } = original;
                 return (
-                    <Link to={paths.employeeDetails.replace(':userId', original.userId)}>
+                    <Link to={paths.employeeDetails.replace(':employeeId', original.employeeId)}>
                         <Flex alignItems="center">
                             {original.profilePicture ? (
                                 <Avatar src={`data:image/jpeg;base64,${original.profilePicture}`} size="xl" className="me-2" />
                             ) : (
-                                <Avatar size="xl" name={original.userName} className="me-2" />
+                                <Avatar size="xl" name={original.fullName} className="me-2" />
                             )}
                             <div className="flex-1">
-                                <h5 className="mb-0 fs-10">{original.userName}</h5>
+                                <h5 className="mb-0 fs-10">{original.fullName}</h5>
                             </div>
                         </Flex>
                     </Link>
@@ -197,12 +198,22 @@ const Employees = () => {
 
     const renderModalBodyContent = () => (
         <Form>
+            <Form.Group controlId="formUserId">
+                <Form.Label>Employee ID</Form.Label>
+                <Form.Control
+                    disabled
+                    type="text"
+                    value={selectedUser?.employeeId || ''}
+                    onChange={(e) => setSelectedUser({ ...selectedUser, employeeId: e.target.value })}
+                    className='mb-3'
+                />
+            </Form.Group>
             <Form.Group controlId="formUserName">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                     type="text"
-                    value={selectedUser?.userName || ''}
-                    onChange={(e) => setSelectedUser({ ...selectedUser, userName: e.target.value })}
+                    value={selectedUser?.fullName || ''}
+                    onChange={(e) => setSelectedUser({ ...selectedUser, fullName: e.target.value })}
                     className='mb-3'
                 />
             </Form.Group>
@@ -299,7 +310,7 @@ const Employees = () => {
         {
             label: 'Save Changes',
             variant: 'falcon-primary',
-            onClick: handleSave,
+            onClick: handleUpdate,
         }
     ];
 

@@ -3,18 +3,25 @@ import { useNavigate, } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Form, Col, Button, Row } from 'react-bootstrap';
 import axios from 'axios';
-import FormHeader from 'components/shared/formSections/FormHeader';
+// import FormHeader from 'components/shared/formSections/FormHeader';
+import TitleHeader from 'components/app/title-header/title-header';
 import FormBody from 'components/shared/formSections/FormBody';
 import IconButton from 'components/common/IconButton';
 import { toast } from 'react-toastify';
 import paths from 'routes/paths';
+import { useRoleStore, useEmployeeStore, useDesignationStore, useDepartmentStore, useBusinessUnitStore, useEmployeeTypeStore } from 'components/shared/storage/storage';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const IndividualRecord = () => {
     const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit, setValue } = useForm();
-    const [roles, setRoles] = useState([]);
+    const { roles, fetchRoles } = useRoleStore();
+    const { employees, fetchEmployees } = useEmployeeStore();
+    const { designations, fetchDesignations } = useDesignationStore();
+    const { departments, fetchDepartments } = useDepartmentStore();
+    const { businessUnits, fetchBusinessUnits } = useBusinessUnitStore();
+    const { employeeTypes, fetchEmployeeTypes } = useEmployeeTypeStore();
     const [profilePicturePreview, setProfilePicturePreview] = useState(null);
     const personalInfoRef = useRef(null);
     const profilePictureRef = useRef(null);
@@ -29,18 +36,19 @@ const IndividualRecord = () => {
     }, []);
 
     useEffect(() => {
-        const fetchRoles = async () => {
-            try {
-                const response = await axios.get(`${baseUrl}/Role`);
-                setRoles(response.data);
-                setValue('role', 'Employee');
-            } catch (error) {
-                console.error('Error fetching roles:', error);
-            }
-        };
-
         fetchRoles();
-    }, [setValue]);
+        fetchEmployees();
+        fetchDesignations();
+        fetchDepartments();
+        fetchBusinessUnits();
+        fetchEmployeeTypes();
+    }, [fetchRoles, fetchEmployees, fetchDesignations, fetchDepartments, fetchBusinessUnits, fetchEmployeeTypes]);
+
+    useEffect(() => {
+        if (roles.length > 0) {
+            setValue('role', 'Employee');
+        }
+    });
 
     const toBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -54,8 +62,8 @@ const IndividualRecord = () => {
     const handleFormSubmit = async (data) => {
         try {
             const payload = {
-                userId: data.userId,
-                userName: data.userName,
+                employeeId: data.employeeId,
+                fullName: data.fullName,
                 email: data.email,
                 phoneNumber: data.phoneNumber,
                 birthDate: data.birthDate,
@@ -65,11 +73,9 @@ const IndividualRecord = () => {
                 employeeType: data.employeeType,
                 immediateSupervisor: data.immediateSupervisor,
                 joinedDate: data.joinedDate,
-                passwordHash: data.passwordHash,
                 role: data.role,
                 profilePicture: profilePictureBase64
             };
-
             const response = await axios.post(`${baseUrl}/user/CreateUser`, payload);
             setToastShown(true);
         } catch (error) {
@@ -87,7 +93,6 @@ const IndividualRecord = () => {
 
             const base64 = await toBase64(file);
             setProfilePictureBase64(base64);
-            console.log("Encoded Profile Picture:", base64);
         }
     };
 
@@ -112,10 +117,15 @@ const IndividualRecord = () => {
         <form onSubmit={handleSubmit(handleFormSubmit)}>
             <Row className="g-3">
                 <Col xs={12}>
-                    <FormHeader
+                    <TitleHeader
                         title="Add an Employee"
-                        primaryActionText="Add Employee"
-                        onDiscard={handleDiscard}
+                        buttons={[
+                            {
+                                icon: 'arrow-left',
+                                name: 'Go Back',
+                                onClick: handleDiscard,
+                            }
+                        ]}
                     />
                 </Col>
                 <Col md={8}>
@@ -126,11 +136,11 @@ const IndividualRecord = () => {
                                     <Form.Label>Employee ID:</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        isInvalid={!!errors.userId}
-                                        {...register('userId', { required: 'Employee ID is required' })}
+                                        isInvalid={!!errors.employeeId}
+                                        {...register('employeeId', { required: 'Employee ID is required' })}
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.userId?.message}
+                                        {errors.employeeId?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
@@ -139,11 +149,11 @@ const IndividualRecord = () => {
                                     <Form.Label>Employee Name:</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        isInvalid={!!errors.userName}
-                                        {...register('userName', { required: 'Employee Name is required' })}
+                                        isInvalid={!!errors.fullName}
+                                        {...register('fullName', { required: 'Employee Name is required' })}
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.userName?.message}
+                                        {errors.fullName?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
@@ -224,7 +234,7 @@ const IndividualRecord = () => {
                                             type="file"
                                             accept="image/*"
                                             isInvalid={!!errors.profilePicture}
-                                            {...register('profilePicture', { required: 'Profile Picture is required' })} // Add required validation if needed
+                                            {...register('profilePicture', { required: 'Profile Picture is required' })}
                                             style={{ display: 'none' }}
                                             id="profilePictureUpload"
                                             onChange={handleProfilePictureChange}
@@ -253,10 +263,17 @@ const IndividualRecord = () => {
                                 <Form.Group>
                                     <Form.Label>Designation:</Form.Label>
                                     <Form.Control
-                                        type="text"
+                                        as="select"
                                         isInvalid={!!errors.designation}
                                         {...register('designation', { required: 'Designation is required' })}
-                                    />
+                                    >
+                                        <option value="">Select Designation</option>
+                                        {designations.map((designation) => (
+                                            <option key={designation.designation} value={designation.designation}>
+                                                {designation.designation}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
                                     <Form.Control.Feedback type="invalid">
                                         {errors.designation?.message}
                                     </Form.Control.Feedback>
@@ -266,10 +283,17 @@ const IndividualRecord = () => {
                                 <Form.Group>
                                     <Form.Label>Department:</Form.Label>
                                     <Form.Control
-                                        type="text"
+                                        as="select"
                                         isInvalid={!!errors.department}
                                         {...register('department', { required: 'Department is required' })}
-                                    />
+                                    >
+                                        <option value="">Select Department</option>
+                                        {departments.map((department) => (
+                                            <option key={department.department} value={department.department}>
+                                                {department.department}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
                                     <Form.Control.Feedback type="invalid">
                                         {errors.department?.message}
                                     </Form.Control.Feedback>
@@ -279,10 +303,17 @@ const IndividualRecord = () => {
                                 <Form.Group>
                                     <Form.Label>Business Unit:</Form.Label>
                                     <Form.Control
-                                        type="text"
+                                        as="select"
                                         isInvalid={!!errors.businessUnit}
                                         {...register('businessUnit', { required: 'Business Unit is required' })}
-                                    />
+                                    >
+                                        <option value="">Select Business Unit</option>
+                                        {businessUnits.map((businessUnit) => (
+                                            <option key={businessUnit.businessUnit} value={businessUnit.businessUnit}>
+                                                {businessUnit.businessUnit}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
                                     <Form.Control.Feedback type="invalid">
                                         {errors.businessUnit?.message}
                                     </Form.Control.Feedback>
@@ -292,10 +323,17 @@ const IndividualRecord = () => {
                                 <Form.Group>
                                     <Form.Label>Employee Type:</Form.Label>
                                     <Form.Control
-                                        type="text"
+                                        as="select"
                                         isInvalid={!!errors.employeeType}
                                         {...register('employeeType', { required: 'Employee Type is required' })}
-                                    />
+                                    >
+                                        <option value="">Select Employee Type</option>
+                                        {employeeTypes.map((employeeType) => (
+                                            <option key={employeeType.employeeType} value={employeeType.employeeType}>
+                                                {employeeType.employeeType}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
                                     <Form.Control.Feedback type="invalid">
                                         {errors.employeeType?.message}
                                     </Form.Control.Feedback>
@@ -305,10 +343,17 @@ const IndividualRecord = () => {
                                 <Form.Group>
                                     <Form.Label>Immediate Supervisor:</Form.Label>
                                     <Form.Control
-                                        type="text"
+                                        as="select"
                                         isInvalid={!!errors.immediateSupervisor}
                                         {...register('immediateSupervisor', { required: 'Immediate Supervisor is required' })}
-                                    />
+                                    >
+                                        <option value="">Select Supervisor</option>
+                                        {employees.map((employee) => (
+                                            <option key={employee.fullName} value={employee.fullName}>
+                                                {employee.fullName}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
                                     <Form.Control.Feedback type="invalid">
                                         {errors.immediateSupervisor?.message}
                                     </Form.Control.Feedback>
@@ -324,19 +369,6 @@ const IndividualRecord = () => {
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         {errors.joinedDate?.message}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                            <Col md="12">
-                                <Form.Group>
-                                    <Form.Label>Password:</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        isInvalid={!!errors.passwordHash}
-                                        {...register('passwordHash', { required: 'passwordHash is required' })}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.passwordHash?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
@@ -368,14 +400,30 @@ const IndividualRecord = () => {
                             </Col>
                         </Row>
                     </FormBody>
-                    <FormBody title="You're almost done!">
+                    {/* <FormBody title="You're almost done!">
                         <Button variant="primary" type="submit">
                             Save Employee
                         </Button>
                         <Button variant="secondary" onClick={handleDiscard}>
                             Discard
                         </Button>
-                    </FormBody>
+                    </FormBody> */}
+                    <TitleHeader
+                        title="You're almost done!"
+                        buttons={[
+                            {
+                                isPrimary: true,
+                                icon: 'folder-plus',
+                                name: 'Save Employee',
+                                type: 'submit'
+                            },
+                            {
+                                isPrimary: false,
+                                name: 'Discard',
+                                onClick: handleDiscard
+                            }
+                        ]}
+                    />
                 </Col >
             </Row >
         </form >

@@ -18,9 +18,9 @@ const LoginForm = ({ hasLabel = false }) => {
   const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
   const validateInput = input => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // For email
-    const employeeIdPattern = /^E\d+$/; // For Employee ID
-    const mobilePattern = /^\d{10}$/; // For 10-digit phone number
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const employeeIdPattern = /^E\d+$/;
+    const mobilePattern = /^\d{10}$/;
 
     if (
       emailPattern.test(input) ||
@@ -38,14 +38,13 @@ const LoginForm = ({ hasLabel = false }) => {
     setLoading(true);
 
     try {
-      // Send the input value as the Identifier field
       const response = await axios.post(`${baseUrl}/otp/send`, {
         identifier: formData.input
       });
 
       if (response.status === 200) {
         toast.success('OTP sent successfully! Check your phone.', { theme: 'colored' });
-        navigate(`${paths.cardOTPVerification}?identifier=${formData.input}`); // Pass identifier here
+        navigate(`${paths.cardOTPVerification}?identifier=${formData.input}`);
       }
     } catch (error) {
       console.error(error);
@@ -96,7 +95,6 @@ const LoginForm = ({ hasLabel = false }) => {
           Please enter a valid Employee ID, Email, or Mobile Number.
         </Form.Control.Feedback>
       </Form.Group>
-
       <Form.Group>
         <Button
           type="submit"
@@ -107,7 +105,6 @@ const LoginForm = ({ hasLabel = false }) => {
         </Button>
       </Form.Group>
 
-      {/* Reset Link */}
       <div className="text-center mt-3">
         <a
           href="#!"

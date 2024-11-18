@@ -67,11 +67,11 @@ const NavbarVertical = () => {
   const NavbarLabel = ({ label }) => (
     <Nav.Item as="li">
       <Row className="mt-3 mb-2 navbar-vertical-label-wrapper">
-        <Col xs="auto" className="navbar-vertical-label navbar-vertical-label">
+        {/* <Col xs="auto" className="navbar-vertical-label navbar-vertical-label">
           {label}
-        </Col>
+        </Col> */}
         <Col className="ps-0">
-          <hr className="mb-0 navbar-vertical-divider"></hr>
+          <hr className="mb-0 navbar-vertical-divider" />
         </Col>
       </Row>
     </Nav.Item>

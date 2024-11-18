@@ -7,35 +7,35 @@ import axios from 'axios';
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const EmployeeDetails = () => {
-    const { userId } = useParams();
-    const [userData, setUserData] = useState(null);
+  const { employeeId } = useParams();
+  const [userData, setUserData] = useState(null);
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await axios.get(`${baseUrl}/user/${userId}`);
-                setUserData(response.data);
-            } catch (error) {
-                console.error("Error fetching user data", error);
-            }
-        };
-        fetchUserData();
-    }, [userId]);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/user/${employeeId}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user data', error);
+      }
+    };
+    fetchUserData();
+  }, [employeeId]);
 
-    if (!userData) {
-        return <div>Loading...</div>;
-    }
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
-    return (
+  return (
+    <>
+      {userData && (
         <>
-            {userData && (
-                <>
-                    <EmployeesDetailsHeader userData={userData} />
-                    <EmployeeDetailsContent userData={userData} />
-                </>
-            )}
+          <EmployeesDetailsHeader userData={userData} />
+          <EmployeeDetailsContent userData={userData} />
         </>
-    );
+      )}
+    </>
+  );
 };
 
 export default EmployeeDetails;

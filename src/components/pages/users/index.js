@@ -20,7 +20,7 @@ const Users = () => {
 
     useEffect(() => {
         if (toastShown) {
-            toast.success('User details updated successfully', { theme: 'colored' });
+            toast.success('User Role updated successfully', { theme: 'colored' });
             setToastShown(false);
         }
     }, [toastShown]);
@@ -35,9 +35,9 @@ const Users = () => {
         setSelectedUser(null);
     };
 
-    const handleSave = async () => {
+    const handleUpdate = async () => {
         try {
-            await axios.put(`${baseUrl}/user/UpdateUser/${selectedUser.userId}`, selectedUser);
+            await axios.put(`${baseUrl}/user/UpdateUser/${selectedUser.employeeId}`, selectedUser);
             setToastShown(true);
             setShowEditModal(false);
             setTimeout(() => {
@@ -64,7 +64,7 @@ const Users = () => {
 
     const columns = [
         {
-            accessorKey: 'userId',
+            accessorKey: 'employeeId',
             header: 'Employee ID',
             meta: {
                 headerProps: { className: 'pe-1 text-900' },
@@ -74,7 +74,7 @@ const Users = () => {
             },
         },
         {
-            accessorKey: 'userName',
+            accessorKey: 'fullName',
             header: 'Name',
             meta: {
                 headerProps: { className: 'pe-1 text-900' },
@@ -127,21 +127,22 @@ const Users = () => {
     const renderModalBodyContent = () => (
         <Form>
             <Form.Group controlId="formUserId">
-                <Form.Label>User ID</Form.Label>
+                <Form.Label>Employee ID</Form.Label>
                 <Form.Control
                     disabled
                     type="text"
-                    value={selectedUser?.userId || ''}
-                    onChange={(e) => setSelectedUser({ ...selectedUser, userId: e.target.value })}
+                    value={selectedUser?.employeeId || ''}
+                    onChange={(e) => setSelectedUser({ ...selectedUser, employeeId: e.target.value })}
                     className='mb-3'
                 />
             </Form.Group>
             <Form.Group controlId="formUserName">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
+                    disabled
                     type="text"
-                    value={selectedUser?.userName || ''}
-                    onChange={(e) => setSelectedUser({ ...selectedUser, userName: e.target.value })}
+                    value={selectedUser?.fullName || ''}
+                    onChange={(e) => setSelectedUser({ ...selectedUser, fullName: e.target.value })}
                     className='mb-3'
                 />
             </Form.Group>
@@ -167,7 +168,7 @@ const Users = () => {
         {
             label: 'Save Changes',
             variant: 'falcon-primary',
-            onClick: handleSave,
+            onClick: handleUpdate,
         }
     ];
 
