@@ -86,9 +86,14 @@ const EventCard = ({ event }) => {
   const badgeText =
     event.eventType.toLowerCase() === 'public' ? 'Public' : 'Private';
   // Example usage:
-  const targetDate = '2024-12-31T23:59:59'; // Target date in ISO format
+  // Target date in ISO format
 
   useEffect(() => {
+    console.log("test 2")
+    const targetDate = '2024-12-31T23:59:59';
+    if (typeof timeLeft === 'undefined') {
+      setTimeLeft(getTimeLeft(targetDate));
+    }
     const interval = setInterval(() => {
       console.log('time updated!');
       setTimeLeft(getTimeLeft(targetDate));
@@ -96,6 +101,10 @@ const EventCard = ({ event }) => {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    console.log(timeLeft);
+  }, [timeLeft])
 
   return (
     <div
@@ -109,7 +118,7 @@ const EventCard = ({ event }) => {
       }}
     >
       <img
-        src={imageSrc}
+        src={event.x}
         alt={`${event.eventName} Banner`}
         style={{
           width: '100%',

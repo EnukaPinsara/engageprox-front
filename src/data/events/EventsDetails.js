@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from 'components/shared/EventCard';
-// import DEFAULT_IMAGE from '../../assets/img/gallery/2.jpg';
+import x from '../../assets/img/gallery/2.jpg';
 import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
@@ -19,44 +19,44 @@ const EventsDetails = () => {
     };
     fetchEvents();
   }, []);
-  //   const sampleEvent = [
-  //     {
-  //       eventId: '12345',
-  //       eventName: 'Annual Tech Conference',
-  //       eventType: 'private', // or 'Virtual'
-  //       eventBanner:
-  //         'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
-  //       x
-  //     },
-  //     {
-  //       eventId: '12345',
-  //       eventName: 'Annual Tech Conference',
-  //       eventType: 'public', // or 'Virtual'
-  //       eventBanner:
-  //         'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
-  //       x
-  //     },
-  //     {
-  //       eventId: '12345',
-  //       eventName: 'Annual Tech Conference',
-  //       eventType: 'private', // or 'Virtual'
-  //       eventBanner:
-  //         'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
-  //       x
-  //     },
-  //     {
-  //       eventId: '12345',
-  //       eventName: 'Annual Tech Conference',
-  //       eventType: 'public', // or 'Virtual'
-  //       eventBanner:
-  //         'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
-  //       x
-  //     }
-  //   ];
+  const sampleEvent = [
+    {
+      eventId: '12345',
+      eventName: 'Annual Tech Conference',
+      eventType: 'private', // or 'Virtual'
+      eventBanner:
+        'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
+      x
+    },
+    {
+      eventId: '12345',
+      eventName: 'Annual Tech Conference',
+      eventType: 'public', // or 'Virtual'
+      eventBanner:
+        'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
+      x
+    },
+    {
+      eventId: '12345',
+      eventName: 'Annual Tech Conference',
+      eventType: 'private', // or 'Virtual'
+      eventBanner:
+        'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
+      x
+    },
+    {
+      eventId: '12345',
+      eventName: 'Annual Tech Conference',
+      eventType: 'public', // or 'Virtual'
+      eventBanner:
+        'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
+      x
+    }
+  ];
   return (
     <div className="event-list row g-4">
-      {events?.length ? (
-        events.map(event => (
+      {sampleEvent?.length ? (
+        sampleEvent.map(event => (
           <div key={event.eventId} className="col-12 col-md-6 col-lg-4">
             <EventCard event={event} />
           </div>
