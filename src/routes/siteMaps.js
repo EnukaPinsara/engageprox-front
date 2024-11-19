@@ -30,12 +30,12 @@ export const appRoutes = {
           name: 'View all events',
           to: paths.events,
           active: true
-        },
-        {
-          name: 'Event Registration',
-          to: paths.eventList,
-          active: true
         }
+        // {
+        //   name: 'Event Registration',
+        //   to: paths.eventList,
+        //   active: true
+        // }
       ]
     },
     {
@@ -136,7 +136,4 @@ export const appRoutes = {
   ]
 };
 
-export default [
-  dashboardRoutes,
-  appRoutes
-];
+export default [dashboardRoutes, appRoutes];

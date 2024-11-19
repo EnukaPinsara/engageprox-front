@@ -36,6 +36,7 @@ import BusinessUnits from 'components/pages/miscellaneous/business-units';
 import CreateBusinessUnit from 'components/pages/miscellaneous/business-units/create-business-unit';
 import EmployeeTypes from 'components/pages/miscellaneous/employee-types';
 import CreateEmployeeType from 'components/pages/miscellaneous/employee-types/create-employee-type';
+import EventRegister from 'components/pages/events/event-register';
 
 const routes = [
   {
@@ -76,7 +77,7 @@ const routes = [
               {
                 path: paths.cardOTPVerification,
                 element: <CardOTPVerification />
-              },
+              }
             ]
           }
         ]
@@ -109,9 +110,13 @@ const routes = [
                 element: <EventDetail />
               },
               {
-                path: paths.eventList,
-                element: <EventList />
+                path: paths.eventRegister,
+                element: <EventRegister />
               }
+              // {
+              //   path: paths.eventList,
+              //   element: <EventList />
+              // }
             ]
           },
           {
@@ -212,7 +217,7 @@ const routes = [
                 element: <Settings />
               }
             ]
-          },
+          }
         ]
       },
       {

@@ -6,7 +6,7 @@ export const rootPaths = {
   eventsRoot: 'events',
   miscellaneousRoot: 'miscellaneous',
   settingsRoot: 'settings',
-  errorsRoot: 'errors',
+  errorsRoot: 'errors'
 };
 
 export default {
@@ -26,6 +26,7 @@ export default {
   viewEvent: `/${rootPaths.eventsRoot}/view-event/:eventId`,
   eventDetail: `/${rootPaths.eventsRoot}/event-detail`,
   eventList: `/${rootPaths.eventsRoot}/event-list`,
+  eventRegister: `/${rootPaths.eventsRoot}/register/:invite-id`,
   audience: `/${rootPaths.settingsRoot}/audience`,
   audienceSettings: `/${rootPaths.settingsRoot}/audience/settings`,
   audienceCreate: `/${rootPaths.settingsRoot}/audience/create-audience`,

@@ -6,19 +6,34 @@ const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const useCounterStore = create(
   persist(
-    (set) => ({
+    set => ({
       count: 0,
-      increaseCount: () => set((state) => ({ count: state.count + 1 })),
-      decreaseCount: () => set((state) => ({ count: state.count - 1 })),
-      resetCount: () => set({ count: 0 }),
+      increaseCount: () => set(state => ({ count: state.count + 1 })),
+      decreaseCount: () => set(state => ({ count: state.count - 1 })),
+      resetCount: () => set({ count: 0 })
     }),
     {
-      name: 'counter-storage',
+      name: 'counter-storage'
     }
   )
 );
 
-const useRoleStore = create((set) => ({
+const useEventStore = create(
+  persist(
+    set => ({
+      eventId: null,
+      isParticipating: false,
+      setEvent: (id, isParticipating = true) =>
+        set({ eventId: id, isParticipating }),
+      resetEvent: () => set({ eventId: null, isParticipating: false })
+    }),
+    {
+      name: 'event-storage'
+    }
+  )
+);
+
+const useRoleStore = create(set => ({
   roles: [],
   fetchRoles: async () => {
     try {
@@ -27,10 +42,10 @@ const useRoleStore = create((set) => ({
     } catch (error) {
       console.error('Error fetching roles:', error);
     }
-  },
+  }
 }));
 
-const useEmployeeStore = create((set) => ({
+const useEmployeeStore = create(set => ({
   employees: [],
   fetchEmployees: async () => {
     try {
@@ -39,58 +54,62 @@ const useEmployeeStore = create((set) => ({
     } catch (error) {
       console.error('Error fetching employees:', error);
     }
-  },
+  }
 }));
 
-const useDesignationStore = create((set) => ({
+const useDesignationStore = create(set => ({
   designations: [],
   fetchDesignations: async () => {
     try {
       const response = await axios.get(`${baseUrl}/designations`);
-      set({ designations: response.data.filter((designation) => designation.status) });
+      set({
+        designations: response.data.filter(designation => designation.status)
+      });
     } catch (error) {
       console.error('Error fetching designations:', error);
     }
-  },
+  }
 }));
 
-const useDepartmentStore = create((set) => ({
+const useDepartmentStore = create(set => ({
   departments: [],
   fetchDepartments: async () => {
     try {
       const response = await axios.get(`${baseUrl}/departments`);
-      set({ departments: response.data.filter((department) => department.status) });
+      set({
+        departments: response.data.filter(department => department.status)
+      });
     } catch (error) {
       console.error('Error fetching departments:', error);
     }
-  },
+  }
 }));
 
-const useBusinessUnitStore = create((set) => ({
+const useBusinessUnitStore = create(set => ({
   businessUnits: [],
   fetchBusinessUnits: async () => {
     try {
       const response = await axios.get(`${baseUrl}/businessunits`);
-      set({ businessUnits: response.data.filter((unit) => unit.status) });
+      set({ businessUnits: response.data.filter(unit => unit.status) });
     } catch (error) {
       console.error('Error fetching business units:', error);
     }
-  },
+  }
 }));
 
-const useEmployeeTypeStore = create((set) => ({
+const useEmployeeTypeStore = create(set => ({
   employeeTypes: [],
   fetchEmployeeTypes: async () => {
     try {
       const response = await axios.get(`${baseUrl}/employeetypes`);
-      set({ employeeTypes: response.data.filter((type) => type.status) });
+      set({ employeeTypes: response.data.filter(type => type.status) });
     } catch (error) {
       console.error('Error fetching employee types:', error);
     }
-  },
+  }
 }));
 
-const useAudienceStore = create((set) => ({
+const useAudienceStore = create(set => ({
   audiences: [],
   fetchAudiences: async () => {
     try {
@@ -100,7 +119,17 @@ const useAudienceStore = create((set) => ({
     } catch (error) {
       console.error('Error fetching audiences:', error);
     }
-  },
+  }
 }));
 
-export { useCounterStore, useRoleStore, useEmployeeStore, useDesignationStore, useDepartmentStore, useBusinessUnitStore, useEmployeeTypeStore, useAudienceStore };
+export {
+  useCounterStore,
+  useRoleStore,
+  useEmployeeStore,
+  useDesignationStore,
+  useDepartmentStore,
+  useBusinessUnitStore,
+  useEmployeeTypeStore,
+  useAudienceStore,
+  useEventStore
+};
