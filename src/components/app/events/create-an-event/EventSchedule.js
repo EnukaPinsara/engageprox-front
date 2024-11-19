@@ -15,18 +15,21 @@ const EventSchedule = ({ register, setValue }) => {
 
   const handleChange = (name, value) => {
     let formattedValue;
+
     if (name === 'startDate' || name === 'endDate') {
-      formattedValue = format(value, 'yyyy-MM-dd HH:mm:ss.SSSSSSS');
-    } else {
-      formattedValue = format(value, 'HH:mm:ss.SSSSSSS');
+      formattedValue = format(value, 'yyyy-MM-dd\'T\'HH:mm:ss');
+    } else if (name === 'startTime' || name === 'endTime') {
+      formattedValue = format(value, 'HH:mm:ss');
     }
 
     setFormData({
       ...formData,
       [name]: value
     });
+
     setValue(name, formattedValue);
   };
+
 
   return (
     <Card className="mb-3">

@@ -9,6 +9,7 @@ import useAdvanceTable from 'hooks/useAdvanceTable';
 import AdvanceTableProvider from 'providers/AdvanceTableProvider';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useRoleStore } from 'components/shared/storage/storage';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -17,6 +18,11 @@ const Users = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [toastShown, setToastShown] = useState(false);
+    const { roles, fetchRoles } = useRoleStore();
+
+    useEffect(() => {
+        fetchRoles();
+    }, [fetchRoles]);
 
     useEffect(() => {
         if (toastShown) {
@@ -148,12 +154,22 @@ const Users = () => {
             </Form.Group>
             <Form.Group controlId="formUserRole">
                 <Form.Label>User Role</Form.Label>
-                <Form.Control
-                    type="test"
+                <Form.Select
                     value={selectedUser?.role || ''}
-                    onChange={(e) => setSelectedUser({ ...selectedUser, role: e.target.value })}
-                    className='mb-3'
-                />
+                    onChange={(e) =>
+                        setSelectedUser({ ...selectedUser, role: e.target.value })
+                    }
+                    className="mb-3"
+                >
+                    <option value="" disabled>
+                        Select a role
+                    </option>
+                    {roles.map((role) => (
+                        <option key={role.id} value={role.roleName}>
+                            {role.roleName}
+                        </option>
+                    ))}
+                </Form.Select>
             </Form.Group>
         </Form>
     );

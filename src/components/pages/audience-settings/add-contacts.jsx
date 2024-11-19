@@ -1,171 +1,158 @@
-// import React, { useEffect, useState } from 'react';
-// import { Card, Col, Form, Row } from 'react-bootstrap';
-// import AdvanceTable from 'components/common/advance-table/AdvanceTable';
-// import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
-// import useAdvanceTable from 'hooks/useAdvanceTable';
-// import AdvanceTableProvider from 'providers/AdvanceTableProvider';
-// import TitleHeader from 'components/app/title-header/title-header';
-// import { useLocation, useNavigate } from 'react-router-dom';
-// import paths from 'routes/paths';
-// import { useAudienceStore, useEmployeeStore } from 'components/shared/storage/storage';
-
-// export const tableColumns = [
-//     {
-//         accessorKey: 'fullName',
-//         header: 'Name'
-//     },
-//     {
-//         accessorKey: 'email',
-//         header: 'Email'
-//     },
-//     {
-//         accessorKey: 'designation',
-//         header: 'Designation'
-//     },
-//     {
-//         accessorKey: 'department',
-//         header: 'Department'
-//     },
-//     {
-//         accessorKey: 'businessUnit',
-//         header: 'Business Unit'
-//     },
-//     {
-//         accessorKey: 'employeeType',
-//         header: 'Employee Type'
-//     },
-// ];
-
-// const Audience = () => {
-//     const [selectedAudience, setSelectedAudience] = useState('All Staff');
-//     const [tableData, setTableData] = useState([]);
-//     const { audiences, fetchAudiences } = useAudienceStore();
-//     const { employees, fetchEmployees } = useEmployeeStore();
-//     const navigate = useNavigate();
-
-//     useEffect(() => {
-//         fetchAudiences();
-//         fetchEmployees();
-//     }, [fetchAudiences, fetchEmployees]);
-
-//     useEffect(() => {
-//         if (selectedAudience === 'All Staff') {
-//             setTableData(employees);
-//         } else {
-//             setTableData([]);
-//         }
-//     }, [selectedAudience, employees]);
-
-//     const table = useAdvanceTable({
-//         data: tableData,
-//         columns: tableColumns,
-//         selection: true,
-//         sortable: true,
-//         pagination: true,
-//         perPage: 10
-//     });
-
-//     const handleOnClickManageAudience = () => {
-//         navigate(paths.audienceSettings);
-//     };
-
-//     const handleSelectChange = value => {
-//         setSelectedAudience(value);
-//     };
-
-//     return (
-//         <>
-//             <Row className="g-3">
-//                 <TitleHeader
-//                     title="Add Contacts"
-//                     buttons={[
-//                         {
-//                             isPrimary: false,
-//                             icon: 'arrow-left',
-//                             name: 'Go Back',
-//                             onClick: handleOnClickManageAudience
-//                         }
-//                     ]}
-//                 >
-//                     <Form.Group className="mb-3">
-//                         <Form.Label>Selected Audience</Form.Label>
-//                         <Form.Select
-//                             value={selectedAudience}
-//                             onChange={({ target: { value } }) => handleSelectChange(value)}
-//                         >
-//                             <option disabled value="">
-//                                 Select audience
-//                             </option>
-//                             <option value="All Staff">All Staff</option>
-//                             {audiences.map(audience => (
-//                                 <option key={audience.id} value={audience.audienc_e}>
-//                                     {audience.audienc_e}
-//                                 </option>
-//                             ))}
-//                         </Form.Select>
-//                     </Form.Group>
-//                 </TitleHeader>
-//                 <AdvanceTableProvider {...table}>
-//                     <Card className="mb-3">
-//                         <Card.Header>
-//                             <h5>Employee list</h5>
-//                         </Card.Header>
-//                         <Card.Body className="p-0">
-//                             <AdvanceTable
-//                                 headerClassName="bg-200 text-nowrap align-middle"
-//                                 rowClassName="align-middle white-space-nowrap"
-//                                 tableProps={{
-//                                     size: 'sm',
-//                                     striped: true,
-//                                     className: 'fs-10 mb-0 overflow-hidden'
-//                                 }}
-//                             />
-//                         </Card.Body>
-//                         <Card.Footer>
-//                             <AdvanceTablePagination />
-//                         </Card.Footer>
-//                     </Card>
-//                 </AdvanceTableProvider>
-//             </Row>
-//         </>
-//     );
-// };
-
-// export default Audience;
-
-
 import React, { useState, useEffect } from 'react';
-import { Card, Dropdown, Form } from 'react-bootstrap';
-import CardDropdown from 'components/common/CardDropdown';
-import EmployeesTableHeader from 'components/app/employees/EmployeesTableHeader';
+import { Card, Form, Modal, Button, Row } from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import TableHeader from 'components/shared/TableHeader';
 import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
-import CustomModal from 'components/shared/CustomModal';
+import TitleHeader from 'components/app/title-header/title-header';
 import paths from 'routes/paths';
 import useAdvanceTable from 'hooks/useAdvanceTable';
 import AdvanceTableProvider from 'providers/AdvanceTableProvider';
+import { useDesignationStore, useDepartmentStore, useBusinessUnitStore } from 'components/shared/storage/storage';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const AddContacts = () => {
+    const location = useLocation();
+    const { audienceId, audienc_e } = location.state || {};
     const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [showFilterModal, setShowFilterModal] = useState(false);
+    const [currentFilter, setCurrentFilter] = useState(null);
+    const [selectedDesignations, setSelectedDesignations] = useState([]);
+    const [selectedDepartments, setSelectedDepartments] = useState([]);
+    const [selectedBusinessUnits, setSelectedBusinessUnits] = useState([])
+    const { designations, fetchDesignations } = useDesignationStore();
+    const { departments, fetchDepartments } = useDepartmentStore();
+    const { businessUnits, fetchBusinessUnits } = useBusinessUnitStore();
     const [toastShown, setToastShown] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${baseUrl}/user`);
                 setUsers(response.data);
-                console.log(response.data);
+                setFilteredUsers(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
         };
 
+        fetchDesignations();
+        fetchDepartments();
+        fetchBusinessUnits();
         fetchData();
     }, []);
+
+    useEffect(() => {
+        if (!audienceId || !audienc_e) {
+            console.error('Audience data not found. Redirecting back.');
+            navigate(paths.audienceSettings);
+        }
+    }, [audienceId, audienc_e, navigate]);
+
+    const applyFilters = () => {
+        const filtered = users.filter(user => {
+            const matchesDesignation = selectedDesignations.length
+                ? selectedDesignations.includes(user.designation)
+                : true;
+            const matchesDepartment = selectedDepartments.length
+                ? selectedDepartments.includes(user.department)
+                : true;
+            const matchesBusinessUnit = selectedBusinessUnits.length
+                ? selectedBusinessUnits.includes(user.businessUnit)
+                : true;
+
+            return matchesDesignation && matchesDepartment && matchesBusinessUnit;
+        });
+        setFilteredUsers(filtered);
+        setShowFilterModal(false);
+    };
+
+    const toggleFilter = (filter, value, setFilter) => {
+        setFilter(prev =>
+            prev.includes(value)
+                ? prev.filter(item => item !== value)
+                : [...prev, value]
+        );
+    };
+
+    const handleApplyBulkAction = async (action) => {
+        if (action === 'add contacts') {
+            const selectedRows = table.getSelectedRowModel().rows;
+            const employeeIds = selectedRows.map(row => row.original.employeeId);
+
+            try {
+                await axios.post(`${baseUrl}/audiences/${audienceId}/add-contacts`, {
+                    audienceId,
+                    employeeIds,
+                });
+                toast.success('Contacts added successfully!');
+            } catch (error) {
+                console.error('Error adding contacts:', error);
+                toast.error('Failed to add contacts. Please try again.');
+            }
+        }
+    };
+
+    const renderModalBody = () => {
+        switch (currentFilter) {
+            case 'designations':
+                return (
+                    <Form.Group>
+                        {designations.map(designation => (
+                            <Form.Check
+                                key={designation.designationId}
+                                type="checkbox"
+                                label={designation.designation}
+                                checked={selectedDesignations.includes(designation.designation)}
+                                onChange={() =>
+                                    toggleFilter(selectedDesignations, designation.designation, setSelectedDesignations)
+                                }
+                            />
+                        ))}
+                    </Form.Group>
+                );
+            case 'departments':
+                return (
+                    <Form.Group>
+                        {departments.map(department => (
+                            <Form.Check
+                                key={department.departmentId}
+                                type="checkbox"
+                                label={department.department}
+                                checked={selectedDepartments.includes(department.department)}
+                                onChange={() =>
+                                    toggleFilter(selectedDepartments, department.department, setSelectedDepartments)
+                                }
+                            />
+                        ))}
+                    </Form.Group>
+                );
+            case 'businessUnits':
+                return (
+                    <Form.Group>
+                        {businessUnits.map(unit => (
+                            <Form.Check
+                                key={unit.businessUnitId}
+                                type="checkbox"
+                                label={unit.businessUnit}
+                                checked={selectedBusinessUnits.includes(unit.businessUnit)}
+                                onChange={() =>
+                                    toggleFilter(selectedBusinessUnits, unit.businessUnit, setSelectedBusinessUnits)
+                                }
+                            />
+                        ))}
+                    </Form.Group>
+                );
+            default:
+                return <p>Please select a filter type.</p>;
+        }
+    };
 
     const columns = [
         {
@@ -219,37 +206,105 @@ const AddContacts = () => {
     ];
 
     const table = useAdvanceTable({
-        data: users,
+        data: filteredUsers,
         columns,
         selection: true,
         sortable: true,
         pagination: true,
-        perPage: 10
+        perPage: 15
     });
 
     return (
-        <AdvanceTableProvider {...table}>
-            <Card className="mb-3">
-                <Card.Header>
-                    <EmployeesTableHeader />
-                </Card.Header>
-                <Card.Body className="p-0">
-                    <AdvanceTable
-                        headerClassName="bg-200 text-nowrap align-middle"
-                        rowClassName="align-middle white-space-nowrap"
-                        tableProps={{
-                            size: 'sm',
-                            striped: true,
-                            className: 'fs-10 mb-0 overflow-hidden'
-                        }}
-                    />
-                </Card.Body>
-                <Card.Footer>
-                    <AdvanceTablePagination />
-                </Card.Footer>
-            </Card>
-        </AdvanceTableProvider>
+        <>
+            <Row className="g-3">
+                <TitleHeader
+                    title="Add Contacts"
+                    buttons={[
+                        {
+                            isPrimary: false,
+                            icon: 'arrow-left',
+                            name: 'Go Back',
+                            onClick: () => navigate(paths.audienceSettings),
+                        }
+                    ]}
+                >
+                    <Form.Group className="mb-3 mt-3">
+                        <Form.Label>Selected Audience</Form.Label>
+                        <Form.Control
+                            disabled
+                            type="text"
+                            value={audienc_e || ''}
+                        />
+                    </Form.Group>
+                </TitleHeader>
+                <AdvanceTableProvider {...table}>
+                    <Card className="mb-3">
+                        <Card.Header>
+                            <TableHeader
+                                headerTitle="Employees"
+                                showNewButton={false}
+                                showExportButton={false}
+                                onApply={handleApplyBulkAction}
+                                buttons={[
+                                    {
+                                        label: 'Filter by designations',
+                                        onClick: () => {
+                                            setCurrentFilter('designations');
+                                            setShowFilterModal(true);
+                                        }, icon: 'filter',
+                                    },
+                                    {
+                                        label: 'Filter by departments',
+                                        onClick: () => {
+                                            setCurrentFilter('departments');
+                                            setShowFilterModal(true);
+                                        }, icon: 'filter',
+                                    },
+                                    {
+                                        label: 'Filter by business units',
+                                        onClick: () => {
+                                            setCurrentFilter('businessUnits');
+                                            setShowFilterModal(true);
+                                        }, icon: 'filter',
+                                    },
+                                ]}
+                                bulkActions={['Add Contacts']}
+                            />
+                        </Card.Header>
+                        <Card.Body className="p-0">
+                            <AdvanceTable
+                                headerClassName="bg-200 text-nowrap align-middle"
+                                rowClassName="align-middle white-space-nowrap"
+                                tableProps={{
+                                    size: 'sm',
+                                    striped: true,
+                                    className: 'fs-10 mb-0 overflow-hidden'
+                                }}
+                            />
+                        </Card.Body>
+                        <Card.Footer>
+                            <AdvanceTablePagination />
+                        </Card.Footer>
+                    </Card>
+                </AdvanceTableProvider>
+            </Row>
+
+            <Modal show={showFilterModal} onHide={() => setShowFilterModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Filter Employees</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{renderModalBody()}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="falcon-default" onClick={() => setShowFilterModal(false)}>
+                        Close
+                    </Button>
+                    <Button variant="falcon-primary" onClick={applyFilters}>
+                        Apply Filters
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 };
 
-export default AddContacts;
+export default AddContacts; 

@@ -38,6 +38,8 @@ import EmployeeTypes from 'components/pages/miscellaneous/employee-types';
 import CreateEmployeeType from 'components/pages/miscellaneous/employee-types/create-employee-type';
 import EventRegister from 'components/pages/events/event-register';
 import ProtectedRoute from 'helpers/protect-route';
+import EventAttendence from 'components/pages/event-attendence';
+import EventCheckIn from 'components/pages/event-attendence/event-checkIn';
 
 const routes = [
   {
@@ -130,6 +132,19 @@ const routes = [
               //   path: paths.eventList,
               //   element: <EventList />
               // }
+            ]
+          },
+          {
+            path: rootPaths.attendenceRoot,
+            children: [
+              {
+                path: paths.eventAttendence,
+                element: <EventAttendence />
+              },
+              {
+                path: paths.eventCheckIn,
+                element: <EventCheckIn />
+              }
             ]
           },
           {

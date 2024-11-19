@@ -89,13 +89,11 @@ const EventCard = ({ event }) => {
   // Target date in ISO format
 
   useEffect(() => {
-    console.log("test 2")
     const targetDate = '2024-12-31T23:59:59';
     if (typeof timeLeft === 'undefined') {
       setTimeLeft(getTimeLeft(targetDate));
     }
     const interval = setInterval(() => {
-      console.log('time updated!');
       setTimeLeft(getTimeLeft(targetDate));
     }, [1000 * 60 * 60]);
 

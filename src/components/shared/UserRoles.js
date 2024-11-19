@@ -9,7 +9,7 @@ const UserRoles = () => {
     useEffect(() => {
         const fetchRoles = async () => {
             try {
-                const response = await axios.get(`${baseUrl}/Role`); // Ensure this endpoint is correct
+                const response = await axios.get(`${baseUrl}/Role`);
                 setRoles(response.data);
             } catch (err) {
                 setError('Error fetching roles');

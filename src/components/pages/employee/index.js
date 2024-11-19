@@ -13,6 +13,7 @@ import useAdvanceTable from 'hooks/useAdvanceTable';
 import AdvanceTableProvider from 'providers/AdvanceTableProvider';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useEmployeeStore, useDesignationStore, useDepartmentStore, useBusinessUnitStore, useEmployeeTypeStore } from 'components/shared/storage/storage';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -22,6 +23,11 @@ const Employees = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [userToDelete, setUserToDelete] = useState(null);
+    const { employees, fetchEmployees } = useEmployeeStore();
+    const { designations, fetchDesignations } = useDesignationStore();
+    const { departments, fetchDepartments } = useDepartmentStore();
+    const { businessUnits, fetchBusinessUnits } = useBusinessUnitStore();
+    const { employeeTypes, fetchEmployeeTypes } = useEmployeeTypeStore();
 
     const [toastShown, setToastShown] = useState(false);
 
@@ -31,6 +37,15 @@ const Employees = () => {
             setToastShown(false);
         }
     }, [toastShown]);
+
+    useEffect(() => {
+        fetchEmployees();
+        fetchDesignations();
+        fetchDepartments();
+        fetchBusinessUnits();
+        fetchEmployeeTypes();
+    }, [fetchEmployees, fetchDesignations, fetchDepartments, fetchBusinessUnits, fetchEmployeeTypes]);
+
 
     const handleEdit = (user) => {
         setSelectedUser(user);
@@ -79,7 +94,6 @@ const Employees = () => {
             try {
                 const response = await axios.get(`${baseUrl}/user`);
                 setUsers(response.data);
-                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -246,48 +260,98 @@ const Employees = () => {
             </Form.Group>
             <Form.Group controlId="formDesignation">
                 <Form.Label>Designation</Form.Label>
-                <Form.Control
-                    type="text"
+                <Form.Select
                     value={selectedUser?.designation || ''}
-                    onChange={(e) => setSelectedUser({ ...selectedUser, designation: e.target.value })}
-                    className='mb-3'
-                />
+                    onChange={(e) =>
+                        setSelectedUser({ ...selectedUser, designation: e.target.value })
+                    }
+                    className="mb-3"
+                >
+                    <option value="" disabled>
+                        Select a designation
+                    </option>
+                    {designations.map((designation) => (
+                        <option key={designation.designation} value={designation.designation}>
+                            {designation.designation}
+                        </option>
+                    ))}
+                </Form.Select>
             </Form.Group>
             <Form.Group controlId="formDepartment">
                 <Form.Label>Department</Form.Label>
-                <Form.Control
-                    type="text"
+                <Form.Select
                     value={selectedUser?.department || ''}
-                    onChange={(e) => setSelectedUser({ ...selectedUser, department: e.target.value })}
-                    className='mb-3'
-                />
+                    onChange={(e) =>
+                        setSelectedUser({ ...selectedUser, department: e.target.value })
+                    }
+                    className="mb-3"
+                >
+                    <option value="" disabled>
+                        Select a department
+                    </option>
+                    {departments.map((department) => (
+                        <option key={department.department} value={department.department}>
+                            {department.department}
+                        </option>
+                    ))}
+                </Form.Select>
             </Form.Group>
             <Form.Group controlId="formBusinessUnit">
                 <Form.Label>Business Unit</Form.Label>
-                <Form.Control
-                    type="text"
+                <Form.Select
                     value={selectedUser?.businessUnit || ''}
-                    onChange={(e) => setSelectedUser({ ...selectedUser, businessUnit: e.target.value })}
-                    className='mb-3'
-                />
+                    onChange={(e) =>
+                        setSelectedUser({ ...selectedUser, businessUnit: e.target.value })
+                    }
+                    className="mb-3"
+                >
+                    <option value="" disabled>
+                        Select a business unit
+                    </option>
+                    {businessUnits.map((businessUnit) => (
+                        <option key={businessUnit.businessUnit} value={businessUnit.businessUnit}>
+                            {businessUnit.businessUnit}
+                        </option>
+                    ))}
+                </Form.Select>
             </Form.Group>
             <Form.Group controlId="formEmployeeType">
                 <Form.Label>Employment Type</Form.Label>
-                <Form.Control
-                    type="text"
+                <Form.Select
                     value={selectedUser?.employeeType || ''}
-                    onChange={(e) => setSelectedUser({ ...selectedUser, employeeType: e.target.value })}
-                    className='mb-3'
-                />
+                    onChange={(e) =>
+                        setSelectedUser({ ...selectedUser, employeeType: e.target.value })
+                    }
+                    className="mb-3"
+                >
+                    <option value="" disabled>
+                        Select a employee type
+                    </option>
+                    {employeeTypes.map((employeeType) => (
+                        <option key={employeeType.employeeType} value={employeeType.employeeType}>
+                            {employeeType.employeeType}
+                        </option>
+                    ))}
+                </Form.Select>
             </Form.Group>
             <Form.Group controlId="formImmediateSupervisor">
                 <Form.Label>Immediate Supervisor</Form.Label>
-                <Form.Control
-                    type="text"
+                <Form.Select
                     value={selectedUser?.immediateSupervisor || ''}
-                    onChange={(e) => setSelectedUser({ ...selectedUser, immediateSupervisor: e.target.value })}
-                    className='mb-3'
-                />
+                    onChange={(e) =>
+                        setSelectedUser({ ...selectedUser, immediateSupervisor: e.target.value })
+                    }
+                    className="mb-3"
+                >
+                    <option value="" disabled>
+                        Select a immediate supervisor
+                    </option>
+                    {employees.map((employee) => (
+                        <option key={employee.fullName} value={employee.fullName}>
+                            {employee.fullName}
+                        </option>
+                    ))}
+                </Form.Select>
             </Form.Group>
             <Form.Group controlId="formJoinedDate">
                 <Form.Label>Joined Date</Form.Label>

@@ -44,8 +44,13 @@ export const appRoutes = {
       active: true,
       children: [
         {
-          name: 'item-to-be-set',
-          to: '404',
+          name: 'Event Attendence',
+          to: paths.eventAttendence,
+          active: true
+        },
+        {
+          name: 'Event Check-In',
+          to: paths.eventCheckIn,
           active: true
         }
       ]
