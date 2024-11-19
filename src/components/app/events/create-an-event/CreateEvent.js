@@ -14,7 +14,6 @@ import EventRegistrationStatus from './EventRegistrationStatus';
 import EventFooter from './EventFooter';
 import CustomModal from 'components/shared/CustomModal';
 import paths from 'routes/paths';
-
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const CreateEvent = () => {
@@ -42,6 +41,7 @@ const CreateEvent = () => {
       familyParticipation: '',
       maxAttendees: '',
       onlineLink: '',
+      rseP_Contact: '',
       registrationRequired: false,
       registrationDeadline: null,
       status: 'scheduled',
@@ -61,20 +61,22 @@ const CreateEvent = () => {
       EndTime: data.endTime,
       AudienceType: data.audienceType,
       Audience: data.audience,
+      AudienceId: data.audienceId,
       ParkingAvailability: data.parkingAvailability === "1",
       FamilyParticipation: data.familyParticipation,
       MaxAttendees: data.maxAttendees,
       OnlineLink: data.onlineLink,
+      RSEP_Contact: data.rseP_Contact,
       RegistrationRequired: data.registrationRequired,
       RegistrationDeadline: data.registrationDeadline,
-      Status: data.status
+      Status: data.status,
     };
 
     try {
       const response = await axios.post(`${baseUrl}/Event`, payload);
       const eventId = response.data.eventId;
 
-      const link = `www.engageprox.com/events/internal/${eventId}`;
+      const link = `www.engageprox.org/events/internal/${eventId}`;
 
       setEventLink(link);
       setEventName(data.eventName);

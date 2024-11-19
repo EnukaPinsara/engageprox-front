@@ -4,6 +4,7 @@ export const rootPaths = {
   authRoot: 'authentication',
   authCardRoot: 'card',
   eventsRoot: 'events',
+  attendenceRoot: 'event-attendence',
   miscellaneousRoot: 'miscellaneous',
   settingsRoot: 'settings',
   errorsRoot: 'errors'
@@ -38,5 +39,7 @@ export default {
   businessUnits: `/${rootPaths.miscellaneousRoot}/business-units`,
   addBusinessUnit: `/${rootPaths.miscellaneousRoot}/business-units/create`,
   employeeTypes: `/${rootPaths.miscellaneousRoot}/employee-types`,
-  addEmployeeType: `/${rootPaths.miscellaneousRoot}/employee-types/create`
+  addEmployeeType: `/${rootPaths.miscellaneousRoot}/employee-types/create`,
+  eventAttendence: `/${rootPaths.attendenceRoot}`,
+  eventCheckIn: `/${rootPaths.attendenceRoot}/check-in`
 };

@@ -115,7 +115,6 @@ const useAudienceStore = create(set => ({
     try {
       const response = await axios.get(`${baseUrl}/audience`);
       set({ audiences: response.data });
-      console.log(response);
     } catch (error) {
       console.error('Error fetching audiences:', error);
     }

@@ -18,13 +18,13 @@ const EventOtherInfo = ({ register, eventType }) => {
           />
         </Form.Group>
 
-        <Form.Group controlId="rsepContact">
+        <Form.Group controlId="rseP_Contact">
           <Form.Label>RSEP Contact Details</Form.Label>
           <Form.Control
             type="text"
-            name="rsepContact"
+            name="rseP_Contact"
             placeholder="RSEP Contact"
-            {...register('rsepContact')}
+            {...register('rseP_Contact')}
           />
         </Form.Group>
 

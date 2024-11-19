@@ -400,14 +400,6 @@ const IndividualRecord = () => {
                             </Col>
                         </Row>
                     </FormBody>
-                    {/* <FormBody title="You're almost done!">
-                        <Button variant="primary" type="submit">
-                            Save Employee
-                        </Button>
-                        <Button variant="secondary" onClick={handleDiscard}>
-                            Discard
-                        </Button>
-                    </FormBody> */}
                     <TitleHeader
                         title="You're almost done!"
                         buttons={[

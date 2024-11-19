@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Form, Col, Button, Row, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import FormHeader from 'components/shared/formSections/FormHeader';
+import TitleHeader from 'components/app/title-header/title-header';
 import FormBody from 'components/shared/formSections/FormBody';
 import UserRoles from 'components/shared/UserRoles';
 import paths from 'routes/paths';
@@ -85,10 +85,6 @@ const AddUser = () => {
         }
     };
 
-    const handleDiscard = () => {
-        navigate(paths.users);
-    };
-
     useEffect(() => {
         if (toastShown) {
             toast.success('User created successfully', { theme: 'colored' });
@@ -96,14 +92,24 @@ const AddUser = () => {
         }
     }, [toastShown]);
 
+    const handleSaveUser = () => {
+        handleSubmit(handleFormSubmit)();
+        navigate(paths.users);
+    };
+
     return (
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <form>
             <Row className="g-3">
                 <Col xs={12}>
-                    <FormHeader
-                        title="Add a User"
-                        primaryActionText="Add User"
-                        onDiscard={handleDiscard}
+                    <TitleHeader
+                        title="Add User"
+                        buttons={[
+                            {
+                                isPrimary: false,
+                                name: 'Discard',
+                                onClick: () => navigate(paths.users),
+                            }
+                        ]}
                     />
                 </Col>
                 <Col md={12}>
@@ -207,14 +213,30 @@ const AddUser = () => {
                                     </Col>
                                 </Row>
                             </FormBody>
-                            <FormBody title="You're almost done!">
+                            <TitleHeader
+                                title="You're almost done!"
+                                buttons={[
+                                    {
+                                        isPrimary: true,
+                                        name: 'Save User',
+                                        icon: 'folder-plus',
+                                        onClick: handleSaveUser, // Trigger form submission
+                                    },
+                                    {
+                                        isPrimary: false,
+                                        name: 'Discard',
+                                        onClick: () => navigate(paths.users),
+                                    }
+                                ]}
+                            />
+                            {/* <FormBody title="You're almost done!">
                                 <Button variant="primary" type="submit">
                                     Save User
                                 </Button>
                                 <Button variant="secondary" onClick={handleDiscard}>
                                     Discard
                                 </Button>
-                            </FormBody>
+                            </FormBody> */}
                         </>
                     )}
                 </Col>
