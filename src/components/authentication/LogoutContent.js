@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logoutImg from 'assets/img/icons/spot-illustrations/45.png';
 import paths from 'routes/paths';
+import { useAuth } from 'providers/AuthProvider';
 
 const loginPaths = {
   simple: paths.simpleLogin,
@@ -13,6 +14,10 @@ const loginPaths = {
 };
 
 const LogoutContent = ({ layout = 'simple', titleTag: TitleTag = 'h4' }) => {
+  useEffect(() => {
+    logout();
+  }, []);
+  const { logout } = useAuth();
   return (
     <>
       <img
@@ -23,7 +28,8 @@ const LogoutContent = ({ layout = 'simple', titleTag: TitleTag = 'h4' }) => {
       />
       <TitleTag>See you again!</TitleTag>
       <p>
-        Thanks for using EngageProX. You are <br className="d-none d-sm-block" />
+        Thanks for using EngageProX. You are{' '}
+        <br className="d-none d-sm-block" />
         now successfully signed out.
       </p>
       <Button

@@ -37,6 +37,7 @@ import CreateBusinessUnit from 'components/pages/miscellaneous/business-units/cr
 import EmployeeTypes from 'components/pages/miscellaneous/employee-types';
 import CreateEmployeeType from 'components/pages/miscellaneous/employee-types/create-employee-type';
 import EventRegister from 'components/pages/events/event-register';
+import ProtectedRoute from 'helpers/protect-route';
 
 const routes = [
   {
@@ -88,7 +89,11 @@ const routes = [
         children: [
           {
             index: true,
-            element: <Dashboard />
+            element: (
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            )
           },
           {
             path: rootPaths.eventsRoot,
@@ -99,11 +104,19 @@ const routes = [
               },
               {
                 path: paths.createEvent,
-                element: <CreateEvent />
+                element: (
+                  <ProtectedRoute>
+                    <CreateEvent />
+                  </ProtectedRoute>
+                )
               },
               {
                 path: paths.viewEvent,
-                element: <EventDetails />
+                element: (
+                  <ProtectedRoute>
+                    <EventDetails />
+                  </ProtectedRoute>
+                )
               },
               {
                 path: paths.eventDetail,
