@@ -18,44 +18,7 @@ const EventsDetails = () => {
     };
     fetchEvents();
   }, []);
-  const sampleEvent = [
-    {
-      targetDate: '2024-12-31T23:59:59',
-      eventId: '12345',
-      eventName: 'Annual Tech Conference',
-      eventType: 'private', // or 'Virtual'
-      eventBanner:
-        'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
-      x
-    },
-    {
-      targetDate: '2024-12-31T23:59:59',
-      eventId: '12345',
-      eventName: 'Annual Tech Conference',
-      eventType: 'public', // or 'Virtual'
-      eventBanner:
-        'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
-      x
-    },
-    {
-      targetDate: '2024-12-31T23:59:59',
-      eventId: '12345',
-      eventName: 'Annual Tech Conference',
-      eventType: 'private', // or 'Virtual'
-      eventBanner:
-        'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
-      x
-    },
-    {
-      targetDate: '2023-12-31T23:59:59',
-      eventId: '12345',
-      eventName: 'Annual Tech Conference',
-      eventType: 'public', // or 'Virtual'
-      eventBanner:
-        'iVBORw0KGgoAAAANSUhEUgAAAAUA' + '...base64 encoded image...',
-      x
-    }
-  ];
+
   return (
     <div className="event-list row g-4">
       {events.length ? (
