@@ -77,7 +77,13 @@ const IndividualRecord = () => {
                 profilePicture: profilePictureBase64
             };
             const response = await axios.post(`${baseUrl}/user/CreateUser`, payload);
-            setToastShown(true);
+
+            if (response.status === 200 || response.status === 201) {
+                toast.success('Employee created successfully');
+                navigate(paths.employees)
+            } else {
+                throw new Error(response.data?.Message || 'Failed to check in');
+            }
         } catch (error) {
             console.error('Error creating employee:', error);
             if (error.response) {

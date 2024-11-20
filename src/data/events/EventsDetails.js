@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from 'components/shared/EventCard';
-import x from '../../assets/img/gallery/2.jpg';
 import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
@@ -59,8 +58,8 @@ const EventsDetails = () => {
   ];
   return (
     <div className="event-list row g-4">
-      {sampleEvent?.length ? (
-        sampleEvent.map(event => (
+      {events.length ? (
+        events.map(event => (
           <div key={event.eventId} className="col-12 col-md-6 col-lg-4">
             <EventCard event={event} />
           </div>

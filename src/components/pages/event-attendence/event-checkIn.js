@@ -18,10 +18,9 @@ const EventCheckIn = () => {
     const [profilePicture, setProfilePicture] = useState(null);
     const [showAdditionalSections, setShowAdditionalSections] = useState(false);
     const [recordNotFound, setRecordNotFound] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false); // State to track submission
-    const [employeeId, setEmployeeId] = useState(null); // State to store the correct employeeId
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [employeeId, setEmployeeId] = useState(null);
 
-    // Handle the search functionality
     const handleSearch = async () => {
         try {
             setRecordNotFound(false);
@@ -30,15 +29,12 @@ const EventCheckIn = () => {
             let foundEmployeeId = null;
 
             if (/^\d+$/.test(searchTerm)) {
-                // Search by phone number
                 const phoneResponse = await axios.get(`${baseUrl}/EventParticipation/by-phone?phoneNumber=${searchTerm}`);
                 foundEmployeeId = phoneResponse.data.employeeId;
             } else if (/\S+@\S+\.\S+/.test(searchTerm)) {
-                // Search by email
                 const emailResponse = await axios.get(`${baseUrl}/EventParticipation/by-email?email=${searchTerm}`);
                 foundEmployeeId = emailResponse.data.employeeId;
             } else {
-                // Search by employeeId
                 const idResponse = await axios.get(`${baseUrl}/EventParticipation?employeeId=${searchTerm}`);
                 const participation = idResponse.data.find((p) => p.employeeId === searchTerm);
                 foundEmployeeId = participation?.employeeId;
@@ -48,11 +44,10 @@ const EventCheckIn = () => {
                 throw new Error('No employee found');
             }
 
-            // Fetch user details based on the employeeId
             const userResponse = await axios.get(`${baseUrl}/User/${foundEmployeeId}`);
             const user = userResponse.data;
 
-            setEmployeeId(foundEmployeeId); // Store employeeId to use it later
+            setEmployeeId(foundEmployeeId);
             setValue('employeeId', user.employeeId);
             setValue('fullName', user.fullName);
             setValue('phoneNumber', user.phoneNumber);
@@ -74,18 +69,16 @@ const EventCheckIn = () => {
         }
     };
 
-    // Handle check-in functionality
     const handleCheckIn = async () => {
-        if (isSubmitting) return; // Prevent multiple submissions
+        if (isSubmitting) return;
 
         try {
-            setIsSubmitting(true); // Disable further submissions
+            setIsSubmitting(true);
 
-            // Use employeeId in check-in data
             const attendanceData = {
                 EventID: "0680210c-2d8e-44ef-829c-c5c46bb0078e",
-                EmployeeID: employeeId, // Use the stored employeeId
-                UserID: employeeId, // Ensure UserID is employeeId
+                EmployeeID: employeeId,
+                UserID: employeeId,
                 CheckinTime: new Date().toISOString(),
                 AttendanceStatus: "Check-In",
             };
@@ -93,8 +86,11 @@ const EventCheckIn = () => {
             const response = await axios.post(`${baseUrl}/Attendance`, attendanceData);
 
             if (response.status === 200 || response.status === 201) {
-                toast.success('Check-in successful!');
-                navigate(paths.events);
+                toast.success('Check-in successful!', {
+                    onClose: () => {
+                        window.location.reload();
+                    }
+                });
             } else {
                 throw new Error(response.data?.Message || 'Failed to check in');
             }
@@ -106,14 +102,13 @@ const EventCheckIn = () => {
                 'An error occurred during check-in.'
             );
         } finally {
-            setIsSubmitting(false); // Re-enable submission
+            setIsSubmitting(false);
         }
     };
 
-    // Handle form submission (prevents Enter key from triggering check-in)
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        handleSearch(); // Only trigger search
+        handleSearch();
     };
 
     return (
@@ -228,16 +223,18 @@ const EventCheckIn = () => {
                                     </Col>
                                 </Row>
                             </FormBody>
-                            <div className="d-flex justify-content-center mt-3">
-                                <Button
-                                    type="button"
-                                    variant="falcon-primary"
-                                    onClick={handleCheckIn}
-                                    disabled={isSubmitting} // Disable button while submitting
-                                >
-                                    {isSubmitting ? 'Checking In...' : 'Check In'}
-                                </Button>
-                            </div>
+                            <TitleHeader>
+                                <div className="d-flex justify-content-center">
+                                    <Button
+                                        type="button"
+                                        variant="falcon-primary"
+                                        onClick={handleCheckIn}
+                                        disabled={isSubmitting}
+                                    >
+                                        {isSubmitting ? 'Checking In...' : 'Check In'}
+                                    </Button>
+                                </div>
+                            </TitleHeader>
                         </>
                     )}
                 </Col>

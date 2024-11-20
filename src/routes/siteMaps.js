@@ -44,67 +44,62 @@ export const appRoutes = {
       active: true,
       children: [
         {
-          name: 'Event Attendence',
+          name: 'QR Manager',
           to: paths.eventAttendence,
           active: true
         },
         {
-          name: 'Event Check-In',
-          to: paths.eventCheckIn,
+          name: 'Parking Management',
+          to: '404',
           active: true
-        }
+        },
       ]
     },
     {
-      name: 'Marketing',
+      name: 'Attendance Management',
+      icon: 'user',
+      active: true,
+      children: [
+        {
+          name: 'Event Check-In',
+          to: paths.eventCheckIn,
+          active: true
+        },
+        {
+          name: 'Parking Check-In',
+          to: '404',
+          active: true
+        },
+      ]
+    },
+    {
+      name: 'Marketing Management',
       icon: 'chart-line',
       active: true,
       children: [
         {
-          name: 'item-to-be-set',
+          name: 'View all Campaigns',
+          to: '404',
+          active: true
+        },
+        {
+          name: 'Create new Campaign',
           to: '404',
           active: true
         }
       ]
     },
     {
-      name: 'Reports',
+      name: 'Reports and Analytics',
       icon: 'chart-pie',
       active: true,
-      children: [
-        {
-          name: 'item-to-be-set',
-          to: '404',
-          active: true
-        }
-      ]
-    },
-    {
-      name: 'Miscellaneous',
-      icon: 'shapes',
-      active: true,
-      children: [
-        {
-          name: 'Designations',
-          to: paths.designations,
-          active: true
-        },
-        {
-          name: 'Departments',
-          to: paths.departments,
-          active: true
-        },
-        {
-          name: 'Business Units',
-          to: paths.businessUnits,
-          active: true
-        },
-        {
-          name: 'Employee Types',
-          to: paths.employeeTypes,
-          active: true
-        }
-      ]
+      // children: [
+      //   {
+      //     name: 'item-to-be-set',
+      //     to: '404',
+      //     active: true
+      //   }
+      // ]
     },
     {
       name: 'Settings',
@@ -123,7 +118,7 @@ export const appRoutes = {
         },
         {
           name: 'Role/Group management',
-          // to: paths.emailDetail,
+          to: '404',
           active: true
         },
         {
@@ -132,10 +127,31 @@ export const appRoutes = {
           active: true
         },
         {
-          name: 'User Role Permission management',
-          // to: paths.emailDetail,
-          active: true
-        }
+          name: 'Miscellaneous',
+          active: true,
+          children: [
+            {
+              name: 'Designations',
+              to: paths.designations,
+              active: true
+            },
+            {
+              name: 'Departments',
+              to: paths.departments,
+              active: true
+            },
+            {
+              name: 'Business Units',
+              to: paths.businessUnits,
+              active: true
+            },
+            {
+              name: 'Employee Types',
+              to: paths.employeeTypes,
+              active: true
+            }
+          ]
+        },
       ]
     }
   ]

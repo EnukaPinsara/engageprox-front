@@ -4,6 +4,7 @@ import { Col, Row, Form, Button } from 'react-bootstrap';
 import FormHeader from 'components/shared/formSections/FormHeader';
 import FormBody from 'components/shared/formSections/FormBody';
 import EventsDetails from 'data/events/EventsDetails';
+import TitleHeader from 'components/app/title-header/title-header';
 import paths from 'routes/paths';
 
 const Events = () => {
@@ -26,12 +27,22 @@ const Events = () => {
     <>
       <Row className="g-3">
         <Col xs={12}>
-          <FormHeader
-            title="Events"
-            primaryActionText="Add Event"
-            onDiscard={handleDiscard}
-            onPrimaryAction={handleAddEvent}
+          <TitleHeader
+            title="Evnents"
+            buttons={[
+              {
+                isPrimary: true,
+                name: 'Add Event',
+                onClick: handleAddEvent,
+              },
+              {
+                isPrimary: false,
+                name: 'Discard',
+                onClick: () => navigate('/'),
+              }
+            ]}
           />
+
         </Col>
         <Col>
           <FormBody title="All Events">

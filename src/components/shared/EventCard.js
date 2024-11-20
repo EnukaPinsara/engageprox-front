@@ -69,26 +69,22 @@ import paths from 'routes/paths';
 const EventCard = ({ event }) => {
   const isAdmin = getUserRole() === 'admin';
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState();
+  const [timeLeft, setTimeLeft] = useState('');
 
   const handleViewDetails = () => {
     if (event.eventId) {
-      navigate(paths.viewEvent.replace(':eventId', event.eventId));
+      navigate(paths.viewEvent.replace(':eventId', event.eventId), {
+        state: { event }
+      });
     } else {
       console.error('Event ID is undefined.');
     }
   };
 
-  const imageSrc = event.eventBanner.startsWith('data:image')
-    ? event.eventBanner
-    : `data:image/jpeg;base64,${event.eventBanner}`;
-
   const badgeColor =
     event.eventType.toLowerCase() === 'public' ? '#82F5BF' : '#F582B9';
   const badgeText =
     event.eventType.toLowerCase() === 'public' ? 'Public' : 'Private';
-  // Example usage:
-  // Target date in ISO format
 
   useEffect(() => {
     if (typeof timeLeft === 'undefined') {
