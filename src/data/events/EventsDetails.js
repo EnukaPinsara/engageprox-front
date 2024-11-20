@@ -21,6 +21,7 @@ const EventsDetails = () => {
   }, []);
   const sampleEvent = [
     {
+      targetDate: '2024-12-31T23:59:59',
       eventId: '12345',
       eventName: 'Annual Tech Conference',
       eventType: 'private', // or 'Virtual'
@@ -29,6 +30,7 @@ const EventsDetails = () => {
       x
     },
     {
+      targetDate: '2024-12-31T23:59:59',
       eventId: '12345',
       eventName: 'Annual Tech Conference',
       eventType: 'public', // or 'Virtual'
@@ -37,6 +39,7 @@ const EventsDetails = () => {
       x
     },
     {
+      targetDate: '2024-12-31T23:59:59',
       eventId: '12345',
       eventName: 'Annual Tech Conference',
       eventType: 'private', // or 'Virtual'
@@ -45,6 +48,7 @@ const EventsDetails = () => {
       x
     },
     {
+      targetDate: '2023-12-31T23:59:59',
       eventId: '12345',
       eventName: 'Annual Tech Conference',
       eventType: 'public', // or 'Virtual'

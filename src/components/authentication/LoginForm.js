@@ -62,9 +62,12 @@ const LoginForm = ({ hasLabel = false }) => {
     } finally {
       setLoading(false);
     }
-    login(
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJFMDAzIiwianRpIjoiNWQ3ZjJiZTYtZDI5Zi00MGM3LTg2ZWUtYjljNzFiODVhNmRmIiwiZXhwIjoxNzMxOTk3NzY5LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDM1MCIsImF1ZCI6Ik15QXBwLUJhY2tFbmQifQ.8WMlciJOMUcKGO0gjUZ6DOd99nahYWC3uSPlH3VBRuo'
-    );
+
+    const user =
+      'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwidXNlclJvbGUiOiJ1c2VyIiwiaWF0IjoxNzAwMDAwMDAwLCJleHAiOjE3MDAwODY0MDB9.';
+    const admin =
+      'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwidXNlclJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjoxNzAwMDg2NDAwfQ.';
+    login(user);
   };
 
   const handleFieldChange = e => {

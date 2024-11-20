@@ -1,5 +1,4 @@
 export function getTimeLeft(targetDate) {
-  console.log('test');
   const now = new Date(); // Current date and time
   const target = new Date(targetDate); // Target date and time
 
@@ -15,6 +14,5 @@ export function getTimeLeft(targetDate) {
     (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
   ); // Hours
 
-  console.log(`${days} days, ${hours} hours left`);
   return `${days} days, ${hours} hours left`;
 }
